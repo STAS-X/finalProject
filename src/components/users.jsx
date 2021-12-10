@@ -4,38 +4,7 @@ import api from "../api";
 
 const Usrs = (props) => {
 
-    let [users, setUsers] = useState(api.users.fetchAll());
-    const handleDelete = (userId) =>
-        setUsers(users.filter((user) => user._id !== userId));
 
-    const renderPhrase = (number) => {
-        const lastOne = Number(number.toString().slice(-1));
-        if (number > 4 && number < 15) return "Человек тусанет";
-        if ([2, 3, 4].indexOf(lastOne) >= 0) return "Человека тусанут";
-        if (lastOne === 1) return "Человек тусанет";
-        return "Человек тусанет";
-    };
-
-    const renderBookmark=(id)=>{
-        return  (<div className={(users.find((cur)=>cur._id===id).bookmark?'bi bi-award-fill':'bi bi-award')}
-                      >
-                 </div>
-                )
-
-
-
-    }
-
-    const handleClickFavorite=(userId)=>{
-        users=users.map( (user)=> {
-            if (user._id===userId)
-                user.bookmark=!user.bookmark
-            return user
-         })
-
-        setUsers(users)
-
-    }
 
 
     return (
