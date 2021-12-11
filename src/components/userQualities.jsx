@@ -13,7 +13,7 @@ const UserQualities = ({ qualities }) => {
 }
 
 UserQualities.propTypes = {
-    qualities: PropTypes.array.isRequired,
+    qualities: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default UserQualities
