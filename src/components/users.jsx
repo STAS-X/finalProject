@@ -1,12 +1,7 @@
-import React, { useState } from "react";
-import api from "../api";
-
+import React, { useState } from 'react'
+import api from '../api'
 
 const Usrs = (props) => {
-
-
-
-
     return (
         <>
             <h2>
@@ -17,14 +12,13 @@ const Usrs = (props) => {
                 >
                     {users.length > 0
                         ? `${users.length} ${renderPhrase(
-                              users.length
+                              users.length,
                           )} с тобой сегодня тусанут`
-                        : "Никто с тобой не тусанет"}
-                    
+                        : 'Никто с тобой не тусанет'}
                 </span>
             </h2>
             {users.length > 0 && (
-                <table className='table'>
+                <table className="table">
                     <thead>
                         <tr>
                             <th scope="col">Имя</th>
@@ -54,9 +48,17 @@ const Usrs = (props) => {
                                 <td>{user.profession.name}</td>
                                 <td>{user.completedMeetings}</td>
                                 <td>{user.rate}</td>
-                                <td><div className={(user.bookmark?'bi bi-award-fill':'bi bi-award')} 
-                                         onClick={()=>handleClickFavorite(user._id)} />
-                   
+                                <td>
+                                    <div
+                                        className={
+                                            user.bookmark
+                                                ? 'bi bi-award-fill'
+                                                : 'bi bi-award'
+                                        }
+                                        onClick={() =>
+                                            handleClickFavorite(user._id)
+                                        }
+                                    />
                                 </td>
                                 <td>
                                     <button
@@ -70,10 +72,9 @@ const Usrs = (props) => {
                         ))}
                     </tbody>
                 </table>
-                )
-            }
+            )}
         </>
-    );
-};
+    )
+}
 
-export default Usrs;
+export default Usrs

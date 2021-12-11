@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-
-const UserProfile=(props)=>{
-    return (
-            <td>{props.profile}</td>
-           )
-               
-
+const UserProfile = ({ profile }) => {
+    return <td>{profile}</td>
 }
 
-export default UserProfile;
+UserProfile.propTypes = {
+    profile: PropTypes.string.isRequired,
+}
+
+export default UserProfile

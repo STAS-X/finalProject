@@ -1,24 +1,26 @@
-import React from "react";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-const TableCaption=(props)=>{
-console.log(props)
+const TableCaption = ({ count, onPhrase }) => {
     return (
-                <h2>
-                    <span
-                        className={
-                            'badge rounded-pill bg-' + (props.count > 0 ? 'primary' : 'danger')
-                        }
-                    >
-                        {props.count> 0
-                            ? `${props.count} ${props.onPhrase(
-                                props.count
-                            )} с тобой сегодня`
-                            : "Никто с тобой сегодня не тусанет"}
-                        
-                    </span>
-                </h2>   
-        )
-
+        <h2>
+            <span
+                className={
+                    'badge rounded-pill bg-' +
+                    (count > 0 ? 'primary' : 'danger')
+                }
+            >
+                {count > 0
+                    ? `${count} ${onPhrase(count)} с тобой сегодня`
+                    : 'Никто с тобой сегодня не тусанет'}
+            </span>
+        </h2>
+    )
 }
 
-export default TableCaption;
+TableCaption.propTypes = {
+    count: PropTypes.number.isRequired,
+    onPhrase: PropTypes.func.isRequired,
+}
+
+export default TableCaption

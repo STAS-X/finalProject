@@ -1,15 +1,23 @@
-import React from "react";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-const UserFavorite=(props)=>{
-   return (
-            <div>
-                <i className={props.onUpdate(props.id)}
-                   onClick={()=>props.onFavotrite(props.id)}
-                   role='img' aria-label='Пользователь в избранном'
-                />
-            </div>
-          )
-
+const UserFavorite = ({ id, onUpdate, onFavotrite }) => {
+    return (
+        <div>
+            <i
+                className={onUpdate(id)}
+                onClick={() => onFavotrite(id)}
+                role="img"
+                aria-label="Пользователь в избранном"
+            />
+        </div>
+    )
 }
 
-export default UserFavorite;
+UserFavorite.propTypes = {
+    id: PropTypes.number.isRequired,
+    onUpdate: PropTypes.func.isRequired,
+    onFavotrite: PropTypes.func.isRequired,
+}
+
+export default UserFavorite

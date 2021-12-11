@@ -1,21 +1,19 @@
-import React from "react";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-
-const UserQualities=(props)=>{
-    return  (
-               props.qualities.map((item) => (
-                    <span
-                        className={
-                            'badge rounded-pill m-1 bg-' + item.color
-                        }
-                        key={item._id}
-                    >
-                        {item.name}
-                    </span>
-                ))
-               
-            )
-          
+const UserQualities = ({ qualities }) => {
+    return qualities.map((item) => (
+        <span
+            className={'badge rounded-pill m-1 bg-' + item.color}
+            key={item._id}
+        >
+            {item.name}
+        </span>
+    ))
 }
 
-export default UserQualities;
+UserQualities.propTypes = {
+    qualities: PropTypes.array.isRequired,
+}
+
+export default UserQualities
