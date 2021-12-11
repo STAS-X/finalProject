@@ -149,6 +149,6 @@ const users = [
         bookmark: false,
     },
 ]
-export function fetchAll() {
+export function fetchAll () {
     return users
 }

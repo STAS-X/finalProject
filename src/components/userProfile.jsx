@@ -6,7 +6,7 @@ const UserProfile = ({ profile }) => {
 }
 
 UserProfile.propTypes = {
-    profile: PropTypes.string.isRequired,
+    profile: PropTypes.any.isRequired,
 }
 
 export default UserProfile

@@ -15,7 +15,7 @@ const UserFavorite = ({ id, onUpdate, onFavotrite }) => {
 }
 
 UserFavorite.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     onUpdate: PropTypes.func.isRequired,
     onFavotrite: PropTypes.func.isRequired,
 }

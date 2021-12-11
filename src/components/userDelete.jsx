@@ -10,7 +10,7 @@ const UserDelete = ({ id, onDelete }) => {
 }
 
 UserDelete.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     onDelete: PropTypes.func.isRequired,
 }
 

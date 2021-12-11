@@ -4,10 +4,8 @@ import PropTypes from 'prop-types'
 
 const UserPaging = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
     const pageCount = Math.ceil(itemsCount / pageSize)
-    console.log(pageCount)
     const pages = _.range(1, pageCount + 1)
     if (pageCount < 2) return null
-    console.log(pages)
 
     return (
         <nav>
