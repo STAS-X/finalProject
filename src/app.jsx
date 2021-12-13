@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import api from './api'
 import paginate from './utils/paginate'
 import UserDelete from './components/userDelete'
-import UserFavorite from './components/userFavorite'
 import TableCaption from './components/tableCaption'
 import UserQualities from './components/userQualities'
-import UserProfile from './components/userProfile'
+import UserFavorite from './components/userFavorite'
 
 import UserPaging from './components/pagination'
 
@@ -44,7 +43,6 @@ const App = () => {
     }
 
     const handlePageChange = (pageIndex) => {
-        console.log('page:', pageIndex)
         if (currentPage !== pageIndex) setCurrentPage(pageIndex)
     }
 
@@ -72,9 +70,9 @@ const App = () => {
                                 <td id="quality">
                                     <UserQualities qualities={user.qualities} />
                                 </td>
-                                <UserProfile profile={user.profession.name} />
-                                <UserProfile profile={user.completedMeetings} />
-                                <UserProfile profile={user.rate} />
+                                <td>{user.profession.name}</td>
+                                <td>{user.completedMeetings}</td>
+                                <td>{user.rate}</td>
                                 <td>
                                     <UserFavorite
                                         id={user._id}
