@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const GroupList = ({
-    items,
+    items: { ...items },
     onItemSelect,
     valueProperty,
     contentProperty,
@@ -38,7 +38,7 @@ GroupList.defaultProps = {
 };
 
 GroupList.propTypes = {
-    items: PropTypes.object.isRequired,
+    items: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     selectedItem: PropTypes.object,
     onItemSelect: PropTypes.func,
     valueProperty: PropTypes.string.isRequired,

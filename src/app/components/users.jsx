@@ -14,7 +14,7 @@ const Users = ({ users: allUsers, ...rest }) => {
     //  console.log(allUsers);
     const pageSize = 4;
     useEffect(() => {
-        api.professions.fetchAll.then(
+        api.professions.fetchAll().then(
             (data) => setProfessions(data)
             /* Object.assign(data, {
                     allProfession: { name: "Все профессии" }
@@ -34,7 +34,7 @@ const Users = ({ users: allUsers, ...rest }) => {
     };
 
     const usersFiltered = selectedProf
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
         : allUsers;
 
     const count = usersFiltered.length;
