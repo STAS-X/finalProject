@@ -3,12 +3,24 @@ import PropTypes from "prop-types";
 import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
 import BookMark from "./bookmark";
+import QualitysList from "./qualitysList";
 // import User from "./user";
 
-const UserTable = ({ users, onSort, selectedSort, onToggleBookMark, onDelete }) => {
+const UserTable = ({
+    users,
+    onSort,
+    selectedSort,
+    onToggleBookMark,
+    onDelete
+}) => {
     const columns = {
         name: { path: "name", name: "Имя" },
-        qualities: { name: "Качества" },
+        qualities: {
+            name: "Качества",
+            component: (user) => {
+                return <QualitysList qualities={user.qualities} />;
+            }
+        },
         professions: { path: "profession.name", name: "Профессия" },
         completedMeetings: {
             path: "completedMeetings",
