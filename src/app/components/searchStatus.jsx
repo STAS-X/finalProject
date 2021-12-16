@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 const SearchStatus = ({ length }) => {
     const renderPhrase = (number) => {
         const lastOne = Number(number.toString().slice(-1));
@@ -13,11 +14,21 @@ const SearchStatus = ({ length }) => {
     return (
         <h2>
             <span
-                className={"badge " + (length > 0 ? "bg-primary" : (length === 0 ? "bg-danger" : "bg-secondary rounded-pill"))} disabled
+                className={
+                    "badge " +
+                    (length > 0
+                        ? "bg-primary"
+                        : length === 0
+                        ? "bg-danger"
+                        : "bg-secondary rounded-pill")
+                }
+                disabled
             >
                 {length > 0
                     ? `${length + " " + renderPhrase(length)}   с тобой сегодня`
-                    : (length === 0 ? "Никто с тобой не тусанет" : "Список пользователей загружается...")}
+                    : length === 0
+                    ? "Никто с тобой не тусанет"
+                    : "Список пользователей загружается..."}
             </span>
         </h2>
     );

@@ -14,9 +14,13 @@ module.exports = {
     plugins: ["react"],
     rules: {
         semi: [2, "always"],
-        indent: ["error", 4],
+        indent: ["error", 4, {
+            ignoredNodes: ["ConditionalExpression"],
+            VariableDeclarator: { var: 2, let: 2, const: 3 },
+            FunctionDeclaration: { parameters: "first" }
+        }],
         "space-before-function-paren": [
-            "error",
+            "warn",
             { anonymous: "always", named: "never" }
         ],
         quotes: [
