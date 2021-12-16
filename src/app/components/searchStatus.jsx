@@ -13,7 +13,7 @@ const SearchStatus = ({ length }) => {
     return (
         <h2>
             <span
-                className={"badge " + (length > 0 ? "bg-primary" : (length === 0 ? "bg-danger" : "bg-secondary"))}
+                className={"badge " + (length > 0 ? "bg-primary" : (length === 0 ? "bg-danger" : "bg-secondary rounded-pill"))} disabled
             >
                 {length > 0
                     ? `${length + " " + renderPhrase(length)}   с тобой сегодня`
