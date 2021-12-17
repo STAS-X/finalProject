@@ -4,7 +4,7 @@ import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
 import BookMark from "./bookmark";
 import QualitysList from "./qualitysList";
-// import Table from "./table";
+import Table from "./table";
 // import User from "./user";
 
 const UserTable = ({
@@ -55,10 +55,15 @@ const UserTable = ({
         }
     };
     return (
-        <table className="table">
+        <Table
+            onSort={onSort}
+            selectedSort={selectedSort}
+            columns={columns}
+            data={users}
+        >
             <TableHeader {...{ onSort, selectedSort, columns }} />
             <TableBody {...{ columns, data: users }} />
-        </table>
+        </Table>
     );
 };
 

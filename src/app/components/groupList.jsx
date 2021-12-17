@@ -11,15 +11,18 @@ const GroupList = ({
     return (
         <ul className="list-group">
             {Object.keys(items).map((item) => {
+                // eslint-disable-next-line no-unused-vars
                 const { [valueProperty]: id, [contentProperty]: content } =
                     items[item];
-                //  console.log(content, rest);
                 return (
                     <li
-                        key={id}
+                        key={content}
                         className={
                             "list-group-item" +
-                            (items[item] === selectedItem ? " active" : "")
+                            (JSON.stringify(items[item]) ===
+                            JSON.stringify(selectedItem)
+                                ? " active"
+                                : "")
                         }
                         onClick={() => onItemSelect(items[item])}
                         role="button"
