@@ -5,9 +5,7 @@ import api from "./api";
 
 function App() {
     const [users, setUsers] = useState(() => {
-        api.users.fetchAll().then(
-            (data) => setUsers(data)
-        );
+        api.users.fetchAll().then((data) => setUsers(data));
     });
 
     const handleDelete = (userId) => {
