@@ -4,14 +4,9 @@ import SearchStatus from "./components/searchStatus";
 import api from "./api";
 
 function App() {
-    const [users, setUsers] = useState();
-
-    useEffect(() => {
+    const [users, setUsers] = useState(() => {
         api.users.fetchAll().then(
             (data) => setUsers(data)
-            /* Object.assign(data, {
-                    allProfession: { name: "Все профессии" }
-                })  */
         );
     });
 
