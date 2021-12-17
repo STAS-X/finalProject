@@ -13,7 +13,8 @@ const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
+    const [sortBy, setSortBy] = useState({ path: "", order: "asc" });
+
     //  console.log(allUsers);
     const pageSize = 8;
     useEffect(() => {
@@ -60,6 +61,7 @@ const Users = ({ users: allUsers, ...rest }) => {
 
     const clearFilter = () => {
         if (selectedProf) setSelectedProf();
+        setSortBy((prevState) => ({ ...prevState, path: "" }));
     };
 
     return (

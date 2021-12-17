@@ -1,8 +1,10 @@
 import React from "react";
+import SelectionCaret from "./selectionStatus";
 import PropTypes from "prop-types";
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
     const handleSort = (item) => {
+        console.log(selectedSort.path, columns);
         if (!item) return;
 
         if (selectedSort.path === item) {
@@ -30,6 +32,16 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         scope="col"
                     >
                         {columns[column].name}
+                        {selectedSort.path ===
+                            columns[column].path && (
+                            <SelectionCaret
+                                sortOrder={
+                                    selectedSort.order
+                                        ? selectedSort.order
+                                        : "asc"
+                                }
+                            />
+                        )}
                     </th>
                 ))}
             </tr>

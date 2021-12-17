@@ -4,6 +4,7 @@ import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
 import BookMark from "./bookmark";
 import QualitysList from "./qualitysList";
+// import Table from "./table";
 // import User from "./user";
 
 const UserTable = ({
@@ -56,15 +57,7 @@ const UserTable = ({
     return (
         <table className="table">
             <TableHeader {...{ onSort, selectedSort, columns }} />
-
             <TableBody {...{ columns, data: users }} />
-            {/*
-            <tbody>
-                {users.map((user) => (
-                    <User {...rest} {...user} key={user._id} />
-                ))}
-            </tbody>
-                */}
         </table>
     );
 };
