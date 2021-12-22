@@ -43,15 +43,15 @@ const UserProfile = () => {
                             );
                         case "completedMeetings":
                             return (
-                                <h3
+                                <h4
                                     key={propName}
-                                >{`Встречи: ${userId[propName]}`}</h3>
+                                >{`Встречи: ${userId[propName]}`}</h4>
                             );
                         case "rate":
                             return (
-                                <h4
+                                <h3
                                     key={propName}
-                                >{`Оценка: ${userId[propName]}`}</h4>
+                                >{`Оценка: ${userId[propName]}`}</h3>
                             );
                         case "qualities":
                             return (

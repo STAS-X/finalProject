@@ -12,6 +12,10 @@ code {
         monospace;
 }
 
+h3, h4 {
+    font-weight: 650;
+}
+
 th {
     vertical-align: text-bottom;
     min-width: 8vw;

@@ -85,7 +85,7 @@ const Users = ({ ...rest }) => {
         setSelectedProf(item);
     };
 
-    if (users) {
+    if (users && users.length > 0) {
         const usersFiltered = selectedProf
             ? users.filter(
                   (user) =>
