@@ -14,12 +14,12 @@ code {
 
 th {
     vertical-align: text-bottom;
-    min-width:8vw;
-    height:8vh;
+    min-width: 8vw;
+    height: 8vh;
 }
 
 td {
-    max-width:1vw;
+    max-width: 1vw;
     vertical-align: middle;
-    word-wrap:break-word;
+    word-wrap: break-word;
 }

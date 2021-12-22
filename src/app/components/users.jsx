@@ -6,26 +6,13 @@ import Pagination from "./pagination";
 import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UsersTable from "./usersTable";
+import { useParams } from "react-router-dom";
 import _ from "lodash";
 import api from "../api";
 
-const Users = ({ users: allUsers, ...rest }) => {
+const Users = ({ ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [professions, setProfessions] = useState();
-    const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ path: "", order: "asc" });
-    const pageSize = 8;
-
-    const [users, setUsers] = useState(() => {
-        api.users.fetchAll().then((data) => setUsers(data));
-    });
-    /*
-    useEffect(() => {
-        console.log("users rendered");
-        api.users.fetchAll().then((data) => setUsers(data));
-    });
-    */
-    useEffect(() => {
+    const [professions, setProfessions] = useState(() => {
         api.professions.fetchAll().then((data) => {
             Object.assign(data, {
                 allProfession: { name: "Все профессии" }
@@ -33,7 +20,31 @@ const Users = ({ users: allUsers, ...rest }) => {
             setProfessions(data);
         });
     });
+    const [selectedProf, setSelectedProf] = useState();
+    const [sortBy, setSortBy] = useState({ path: "", order: "asc" });
+    const pageSize = 8;
+    const params = useParams();
 
+    const userId = params.userId ? +params.userId : -1;
+
+    const [users, setUsers] = useState(() => {
+        api.users.fetchById(userId).then((data) => setUsers(data));
+    });
+    /*
+    useEffect(() => {
+        console.log("users rendered");
+        api.users.fetchAll().then((data) => setUsers(data));
+    });
+
+    useEffect(() => {
+        api.professions.fetchAll().then((data) => {
+            Object.assign(data, {
+                allProfession: { name: "Все профессии" }
+            });
+            setProfessions(data);
+        });
+    }, [professions]);
+    */
     useEffect(() => setCurrentPage(1), [selectedProf]);
 
     const handleDelete = (userId) => {
@@ -44,7 +55,9 @@ const Users = ({ users: allUsers, ...rest }) => {
                 users.filter((user) => user._id !== userId).length >
                     (currentPage - 1) * pageSize || currentPage === 1
             )
-        ) setCurrentPage((prevState) => prevState - 1);
+        ) {
+            setCurrentPage((prevState) => prevState - 1);
+        }
     };
 
     const handleToggleBookMark = (id) => {
@@ -76,9 +89,9 @@ const Users = ({ users: allUsers, ...rest }) => {
         const usersFiltered = selectedProf
             ? users.filter(
                   (user) =>
-                      (JSON.stringify(user.profession) ===
+                      JSON.stringify(user.profession) ===
                           JSON.stringify(selectedProf) ||
-                      selectedProf.name === "Все профессии")
+                      selectedProf.name === "Все профессии"
               )
             : users;
 
@@ -97,7 +110,7 @@ const Users = ({ users: allUsers, ...rest }) => {
         return (
             <div className="d-flex">
                 {professions && (
-                    <div className="d-flex flex-column flex-shrink-0 p-3">
+                    <div className="d-flex flex-column flex-shrink-0 p-3 pt-0">
                         <GroupList
                             selectedItem={selectedProf}
                             items={professions}

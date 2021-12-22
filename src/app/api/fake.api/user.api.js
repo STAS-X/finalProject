@@ -150,6 +150,18 @@ const fetchAll = () =>
         }, 2000);
     });
 
+const fetchById = (id) =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(
+                users.filter((item, itemId) => {
+                    return itemId === +id || item._id === id || id === -1;
+                })
+            );
+        }, 2000);
+    });
+
 export default {
-    fetchAll
+    fetchAll,
+    fetchById
 };
