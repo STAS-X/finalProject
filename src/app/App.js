@@ -12,11 +12,6 @@ class App extends React.Component {
         super(props);
 
         this.handleOnLoad = this.handleOnLoad.bind(this);
-        // this.handleUpdateUsers = this.handleUpdateUsers.bind(this);
-
-        /* this.state = {
-            allUsers: JSON.parse(localStorage.getItem("allUsers")) || []
-        }; */
         this.handleOnLoad();
     }
 
@@ -44,23 +39,6 @@ class App extends React.Component {
             });
         };
     }
-    /*
-    componentDidMount() {
-        console.log("app mounted");
-    }
-
-    componentWillUnmount() {
-        console.log("app unmounted");
-    }
-
-    handleUpdateUsers(items) {
-        this.setState({ allUsers: this.state.allUsers.concat(items) }, () => {
-            localStorage.setItem(
-                "allUsers",
-                JSON.stringify(this.state.allUsers)
-            );
-        });
-    } */
 
     render() {
         return (
