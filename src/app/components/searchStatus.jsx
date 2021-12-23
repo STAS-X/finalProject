@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SearchStatus = ({ length }) => {
+const SearchStatus = ({ length, userId }) => {
     const renderPhrase = (number) => {
         const lastOne = Number(number.toString().slice(-1));
         if (number > 4 && number < 15) {
@@ -15,7 +15,7 @@ const SearchStatus = ({ length }) => {
         <h2>
             <span
                 className={
-                    "badge " +
+                    "badge m-2 " +
                     (length > 0
                         ? "bg-primary"
                         : length === 0
@@ -28,13 +28,18 @@ const SearchStatus = ({ length }) => {
                     ? `${length + " " + renderPhrase(length)}   с тобой сегодня`
                     : length === 0
                     ? "Никто с тобой не тусанет"
+                    : length === -1
+                    ? userId
+                        ? `Пользователь <${userId}> не найден`
+                        : "Пользователи отсутствуют"
                     : "Список пользователей загружается..."}
             </span>
         </h2>
     );
 };
 SearchStatus.propTypes = {
-    length: PropTypes.number
+    length: PropTypes.number,
+    userId: PropTypes.any
 };
 
 export default SearchStatus;

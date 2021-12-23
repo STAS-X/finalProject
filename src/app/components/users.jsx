@@ -1,6 +1,5 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
 import GroupList from "./groupList";
@@ -28,23 +27,40 @@ const Users = ({ ...rest }) => {
     const userId = params.userId ? +params.userId : -1;
 
     const [users, setUsers] = useState(() => {
-        api.users.fetchById(userId).then((data) => setUsers(data));
-    });
-    /*
-    useEffect(() => {
-        console.log("users rendered");
-        api.users.fetchAll().then((data) => setUsers(data));
+        const usersApp = JSON.parse(localStorage.getItem("allUsers")) || [];
+        if (usersApp && usersApp.length > 0) {
+            setTimeout(function () {
+                setUsers(
+                    usersApp.filter((item, itemId) => {
+                        return (
+                            itemId + 1 === userId ||
+                            item._id === userId ||
+                            userId === -1
+                        );
+                    })
+                );
+            }, 1000);
+        } else api.users.fetchById(userId).then((data) => setUsers(data));
     });
 
     useEffect(() => {
-        api.professions.fetchAll().then((data) => {
-            Object.assign(data, {
-                allProfession: { name: "Все профессии" }
-            });
-            setProfessions(data);
-        });
-    }, [professions]);
-    */
+        if (users && users.length > 0 && userId === -1) {
+            localStorage.setItem("allUsers", JSON.stringify(users));
+        }
+
+        return () => {
+            // console.log("unmount users", userId);
+        };
+    }, [users]);
+
+    useEffect(() => {
+        return () => {
+            setUsers();
+            setSelectedProf();
+            setSortBy({ path: "", order: "asc" });
+        };
+    }, []);
+
     useEffect(() => setCurrentPage(1), [selectedProf]);
 
     const handleDelete = (userId) => {
@@ -105,6 +121,8 @@ const Users = ({ ...rest }) => {
         const clearFilter = () => {
             if (selectedProf) setSelectedProf();
             setSortBy((prevState) => ({ ...prevState, path: "" }));
+            localStorage.setItem("allUsers", JSON.stringify([]));
+            window.location.reload();
         };
 
         return (
@@ -118,7 +136,7 @@ const Users = ({ ...rest }) => {
                         />
                         <button
                             className="btn btn-secondary mt-2"
-                            onClick={clearFilter}
+                            onClick={() => clearFilter()}
                         >
                             Очистить
                         </button>
@@ -149,11 +167,15 @@ const Users = ({ ...rest }) => {
             </div>
         );
     }
-    return <SearchStatus length={-1} />;
-};
-
-Users.propTypes = {
-    users: PropTypes.array
+    if (users && users.length < 1) {
+        return (
+            <SearchStatus
+                length={-1}
+                userId={params.userId ? params.userId : -1}
+            />
+        );
+    }
+    return <SearchStatus length={-2} userId={userId} />;
 };
 
 export default Users;

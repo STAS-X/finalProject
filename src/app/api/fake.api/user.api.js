@@ -155,7 +155,7 @@ const fetchById = (id) =>
         window.setTimeout(function () {
             resolve(
                 users.filter((item, itemId) => {
-                    return itemId === +id || item._id === id || id === -1;
+                    return (itemId + 1) === +id || item._id === id || id === -1;
                 })
             );
         }, 2000);

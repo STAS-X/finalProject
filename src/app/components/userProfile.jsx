@@ -32,30 +32,36 @@ const UserProfile = () => {
                         case "name":
                             return (
                                 <h2
+                                    className="m-2"
                                     key={propName}
                                 >{`Имя: ${userId[propName]}`}</h2>
                             );
                         case "profession":
                             return (
                                 <h2
+                                    className="m-2"
                                     key={propName}
                                 >{`Профессия: ${userId[propName].name}`}</h2>
                             );
                         case "completedMeetings":
                             return (
                                 <h4
+                                    className="m-2"
                                     key={propName}
                                 >{`Встречи: ${userId[propName]}`}</h4>
                             );
                         case "rate":
                             return (
-                                <h3
+                                <h3 className="m-2"
                                     key={propName}
                                 >{`Оценка: ${userId[propName]}`}</h3>
                             );
                         case "qualities":
                             return (
-                                <span key={propName}>
+                                <span
+                                    className="m-2"
+                                    key={propName}
+                                >
                                     {" "}
                                     <QualitysList
                                         qualities={userId[propName]}
@@ -65,7 +71,7 @@ const UserProfile = () => {
                     }
                 })}
                 <button
-                    className="btn btn-outline-secondary mt-2"
+                    className="btn btn-outline-secondary m-2"
                     onClick={() => handleSave()}
                 >
                     Все пользователи
@@ -73,7 +79,7 @@ const UserProfile = () => {
             </React.Fragment>
         );
     }
-    return <SearchStatus length={-1} />;
+    return <SearchStatus length={-2} />;
 };
 
 export default UserProfile;

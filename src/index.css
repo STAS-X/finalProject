@@ -16,14 +16,15 @@ h3, h4 {
     font-weight: 650;
 }
 
-th {
-    vertical-align: text-bottom;
-    min-width: 8vw;
-    height: 8vh;
-}
 
-td {
-    max-width: 1vw;
+th, td {
+    width: 8vw;
+    height: 75px;
     vertical-align: middle;
     word-wrap: break-word;
+}
+
+nav {
+    position: fixed;
+    top: 820px;
 }
