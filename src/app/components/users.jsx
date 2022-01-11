@@ -21,7 +21,7 @@ const Users = ({ ...rest }) => {
     });
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "", order: "asc" });
-    const pageSize = 8;
+    const pageSize = 6;
     const params = useParams();
 
     const userId = params.userId ? +params.userId : -1;

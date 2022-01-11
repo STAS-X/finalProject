@@ -79,7 +79,7 @@ const UserProfile = () => {
             </React.Fragment>
         );
     }
-    return <SearchStatus length={-2} />;
+    return <SearchStatus length={-3} />;
 };
 
 export default UserProfile;

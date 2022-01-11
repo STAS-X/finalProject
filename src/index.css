@@ -19,12 +19,11 @@ h3, h4 {
 
 th, td {
     width: 8vw;
-    height: 75px;
+    height: 80px;
     vertical-align: middle;
     word-wrap: break-word;
 }
 
 nav {
-    position: fixed;
-    top: 820px;
+    margin-top: 30px;
 }
