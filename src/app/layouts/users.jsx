@@ -1,11 +1,12 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from "react";
 import { paginate } from "../utils/paginate";
-import Pagination from "./pagination";
-import GroupList from "./groupList";
-import SearchStatus from "./searchStatus";
-import UsersTable from "./usersTable";
-import { useParams } from "react-router-dom";
+import Pagination from "../components/pagination";
+import GroupList from "../components/groupList";
+import SearchStatus from "../components/searchStatus";
+import UsersTable from "../components/usersTable";
+import Searchfield from "../components/searchField";
+import { useParams, useHistory } from "react-router-dom";
 import _ from "lodash";
 import api from "../api";
 
@@ -23,12 +24,23 @@ const Users = ({ ...rest }) => {
     const [sortBy, setSortBy] = useState({ path: "", order: "asc" });
     const pageSize = 6;
     const params = useParams();
+    const [searchUser, setSearch] = useState();
 
-    const userId = params.userId ? +params.userId : -1;
+    const userId =
+        params.userId && params.userId !== "reset" ? +params.userId : -1;
+
+    if (params.userId === "reset") {
+        localStorage.setItem("allUsers", JSON.stringify(null));
+    }
+
+    const history = useHistory();
+    if (history.location.pathname.search("/users/reset") > -1)
+        // eslint-disable-next-line curly
+        history.replace("/users");
 
     const [users, setUsers] = useState(() => {
         const usersApp = JSON.parse(localStorage.getItem("allUsers")) || [];
-        if (usersApp && usersApp.length > 0) {
+        if (usersApp && params.userId !== "reset") {
             setTimeout(function () {
                 setUsers(
                     usersApp.filter((item, itemId) => {
@@ -40,12 +52,14 @@ const Users = ({ ...rest }) => {
                     })
                 );
             }, 1000);
-        } else api.users.fetchById(userId).then((data) => setUsers(data));
+        } else {
+            api.users.fetchById(userId).then((data) => setUsers(data));
+        }
     });
 
     useEffect(() => {
-        if (users && users.length > 0 && userId === -1) {
-            localStorage.setItem("allUsers", JSON.stringify(users));
+        if (/* users && users.length > 0 && */ userId === -1 && !searchUser) {
+            localStorage.setItem("allUsers", JSON.stringify(users || []));
         }
 
         return () => {
@@ -63,17 +77,28 @@ const Users = ({ ...rest }) => {
 
     useEffect(() => setCurrentPage(1), [selectedProf]);
 
+    useEffect(() => {
+        if (document.querySelector("input[name='search']")) document.querySelector("input[name='search']").focus();
+    }, [searchUser]);
+
     const handleDelete = (userId) => {
-        setUsers(users.filter((user) => user._id !== userId));
+        const usersDelete = JSON.parse(localStorage.getItem("allUsers")).filter(
+            (user) => user._id !== userId
+        );
+        localStorage.setItem("allUsers", JSON.stringify(usersDelete || []));
+
+        setUsers(usersDelete);
 
         if (
             !(
-                users.filter((user) => user._id !== userId).length >
+                usersDelete.filter((user) => user._id !== userId).length >
                     (currentPage - 1) * pageSize || currentPage === 1
             )
         ) {
             setCurrentPage((prevState) => prevState - 1);
         }
+
+        if (searchUser) updateSearch(searchUser);
     };
 
     const handleToggleBookMark = (id) => {
@@ -101,6 +126,23 @@ const Users = ({ ...rest }) => {
         setSelectedProf(item);
     };
 
+    const handleSearch = ({ target }) => {
+        const searchUser = target.value;
+        setSearch(searchUser);
+        updateSearch(searchUser);
+    };
+
+    const updateSearch = (searchUser) => {
+        const usersFromLocal = JSON.parse(localStorage.getItem("allUsers"));
+        if (searchUser) {
+            if (selectedProf) setSelectedProf();
+            const searchFilter = usersFromLocal.filter(
+                (user) => user.name.search(searchUser) > -1
+            );
+            setUsers(searchFilter);
+        } else setUsers(usersFromLocal);
+    };
+
     if (users && users.length > 0) {
         const usersFiltered = selectedProf
             ? users.filter(
@@ -121,8 +163,8 @@ const Users = ({ ...rest }) => {
         const clearFilter = () => {
             if (selectedProf) setSelectedProf();
             setSortBy((prevState) => ({ ...prevState, path: "" }));
-            localStorage.setItem("allUsers", JSON.stringify([]));
-            window.location.reload();
+            localStorage.setItem("allUsers", JSON.stringify(null));
+            location.replace("/users/reset");
         };
 
         return (
@@ -143,8 +185,16 @@ const Users = ({ ...rest }) => {
                     </div>
                 )}
 
-                <div className="d-flex flex-column">
+                <div className="d-flex flex-column w-50">
                     <SearchStatus length={count} />
+                    <Searchfield
+                        name="search"
+                        label="Строка поиска по имени :"
+                        holder="Введите имя..."
+                        value={searchUser || ""}
+                        error=""
+                        onChange={handleSearch}
+                    />
                     {count > 0 && (
                         <UsersTable
                             users={usersCrop}
@@ -167,11 +217,26 @@ const Users = ({ ...rest }) => {
             </div>
         );
     }
-    if (users && users.length < 1) {
+    if (users && users.length === 0 && searchUser) {
+        return (
+            <div className="d-flex flex-column w-50">
+                <SearchStatus length={0} />
+                <Searchfield
+                    name="search"
+                    label="Строка поиска по имени:"
+                    holder="Введите имя..."
+                    error={`Пользователи с именем '${searchUser}' не найдены`}
+                    value={searchUser || ""}
+                    onChange={handleSearch}
+                />
+            </div>
+        );
+    }
+    if (users && users.length === 0) {
         return (
             <SearchStatus
                 length={-1}
-                userId={params.userId ? params.userId : -1}
+                userId={params.userId ? params.userId : null}
             />
         );
     }

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const SelectionCaret = ({ sortOrder }) => {
     // console.log(sortOrder, "Сортировка");
     return (
-        <button type="button" className="btn btn-outline-secondary m-2">
+        <button type="button" className="btn btn-outline-secondary btn-sm m-2">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={

@@ -11,6 +11,14 @@ const SearchStatus = ({ length, userId }) => {
         if ([2, 3, 4].indexOf(lastOne) >= 0) return "человека тусанут";
         return "человек тусанет";
     };
+
+    const handleReset = () => {
+        location.replace("/users/reset");
+    };
+    const buttonToBlock = {
+        display: "block"
+    };
+
     return (
         <h2>
             <span
@@ -18,7 +26,7 @@ const SearchStatus = ({ length, userId }) => {
                     "badge m-2 " +
                     (length > 0
                         ? "bg-primary"
-                        : length === 0
+                        : length === -1
                         ? "bg-danger"
                         : "bg-secondary rounded-pill")
                 }
@@ -27,15 +35,24 @@ const SearchStatus = ({ length, userId }) => {
                 {length > 0
                     ? `${length + " " + renderPhrase(length)}   с тобой сегодня`
                     : length === 0
-                    ? "Никто с тобой не тусанет"
+                    ? "Никто не тусанет с тобой"
                     : length === -1
                     ? userId
                         ? `Пользователь <${userId}> не найден`
-                        : "Пользователи отсутствуют"
+                        : "Никто не тусанет с тобой"
                     : length === -2
-                        ? "Список пользователей загружается..."
-                        : "Профиль пользователя загружается..." }
+                    ? "Список пользователей загружается..."
+                    : "Профиль пользователя загружается..."}
             </span>
+            {length === -1 && !userId && (
+                <button
+                    className="btn btn-outline-secondary m-2"
+                    style ={buttonToBlock}
+                    onClick={() => handleReset()}
+                >
+                    Все пользователи
+                </button>
+            )}
         </h2>
     );
 };

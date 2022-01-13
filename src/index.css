@@ -18,7 +18,8 @@ h3, h4 {
 
 
 th, td {
-    width: 8vw;
+    min-width: 9vw;
+    max-width: 9vw;
     height: 80px;
     vertical-align: middle;
     word-wrap: break-word;
