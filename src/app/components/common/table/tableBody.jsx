@@ -16,7 +16,7 @@ const TableBody = ({ data, columns }) => {
             return (
                 <Link
                     key={_.get(item, "_id")}
-                    to={`/userProfile?id=${_.get(item, "_id")}`}
+                    to={`/users/id=${_.get(item, "_id")}`}
                 >
                     {_.get(item, columns[column].path)}
                 </Link>

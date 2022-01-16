@@ -1,26 +1,33 @@
 /* eslint-disable indent */
 /* eslint-disable curly */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import SearchStatus from "./searchStatus";
-import QualitysList from "./qualitysList";
-import api from "../api";
-import query from "query-string";
+import PropTypes from "prop-types";
+import api from "../../../../api/index";
+import SearchStatus from "../../../ui/searchStatus";
+import QualitysList from "../../../ui/qualities/qualitysList";
 
-const UserProfile = () => {
-    const search = query.parse(location.search);
+const UserProfile = ({ searchId }) => {
+    const [userId, setUserId] = useState({});
 
-    const [userId, setUserId] = useState(() => {
-                if (search.id)
-                    api.users
-                        .fetchById(search.id)
-                        .then((data) => setUserId(data[0]));
-            }
-    );
+    useEffect(() => {
+        if (searchId) {
+            const userFromStor =
+                JSON.parse(localStorage.getItem("allUsers")) || [];
+            if (
+                userFromStor.length > 0 &&
+                userFromStor.findIndex((cur) => cur._id === searchId) > -1
+            )
+                setUserId(
+                    userFromStor.filter((cur) => cur._id === searchId)[0]
+                );
+            else api.users.fetchById(searchId).then((data) => setUserId(data));
+        }
+    }, []);
 
     const history = useHistory();
     const handleSave = () => {
-        history.replace("/users");
+        history.replace(`/users/${userId._id}/edit`);
     };
 
     if (userId) {
@@ -52,21 +59,33 @@ const UserProfile = () => {
                             );
                         case "rate":
                             return (
-                                <h3 className="m-2"
+                                <h3
+                                    className="m-2"
                                     key={propName}
                                 >{`Оценка: ${userId[propName]}`}</h3>
                             );
                         case "qualities":
                             return (
-                                <span
-                                    className="m-2"
-                                    key={propName}
-                                >
+                                <span className="m-2" key={propName}>
                                     {" "}
                                     <QualitysList
                                         qualities={userId[propName]}
                                     />{" "}
                                 </span>
+                            );
+                        case "email":
+                            return (
+                                <h4
+                                    className="m-2"
+                                    key={propName}
+                                >{`Почтовый адрес: ${userId[propName]}`}</h4>
+                            );
+                        case "sex":
+                            return (
+                                <h4
+                                    className="m-2"
+                                    key={propName}
+                                >{`Пол: ${userId[propName]}`}</h4>
                             );
                     }
                 })}
@@ -74,12 +93,19 @@ const UserProfile = () => {
                     className="btn btn-outline-secondary m-2"
                     onClick={() => handleSave()}
                 >
-                    Все пользователи
+                    Изменить данные
                 </button>
             </React.Fragment>
         );
     }
+    if (userId === null) {
+        return <SearchStatus length={-1} userId={searchId} />;
+    }
     return <SearchStatus length={-3} />;
+};
+
+UserProfile.propTypes = {
+    searchId: PropTypes.string.isRequired
 };
 
 export default UserProfile;

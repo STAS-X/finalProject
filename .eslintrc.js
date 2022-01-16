@@ -14,6 +14,7 @@ module.exports = {
     plugins: ["react"],
     rules: {
         semi: [2, "always"],
+        "multiline-ternary": ["off"],
         indent: [
             "error",
             4,

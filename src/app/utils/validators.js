@@ -2,16 +2,18 @@ export default function validator(data, config) {
     const errors = {};
     function validate(validateMethod, data, config) {
         switch (validateMethod) {
-        case "isRequired":
-            if (data.trim() === "") return config.message;
+        case "isRequired": {
+            if ((typeof data === "string" && data.trim() === "") ||
+                (typeof data === "boolean" && !data)) return config.message;
             break;
+        }
         case "isEmail": {
             const emailReg = /^\S+@\S+\.\S+$/g;
             if (!emailReg.test(data)) return config.message;
             break;
         }
         case "isPass": {
-            const passReg = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{4,}$/g;
+            const passReg = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}$/g;
             if (!passReg.test(data)) return config.message;
             break;
         }
@@ -29,7 +31,6 @@ export default function validator(data, config) {
                 config[fieldName][validateMethod]
             );
             if (error && !errors[fieldName]) errors[fieldName] = error;
-            console.log(errors[fieldName], error);
         }
     }
     return errors;

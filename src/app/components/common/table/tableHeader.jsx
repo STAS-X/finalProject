@@ -1,5 +1,5 @@
 import React from "react";
-import SelectionCaret from "./selectionStatus";
+import SelectionCaret from "../filters/selectionStatus";
 import PropTypes from "prop-types";
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {

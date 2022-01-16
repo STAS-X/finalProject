@@ -1,79 +1,46 @@
-import React, { useState, useEffect } from "react";
-import Textfield from "../components/textField";
-import validator from "../utils/validators";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import LoginForm from "../components/ui/loginForm";
+import RegisterForm from "../components/ui/registerForm";
 
 const Login = () => {
-    const [data, setData] = useState({ email: "", pass: "" });
-    // eslint-disable-next-line no-unused-vars
-    const [errors, setErrors] = useState({});
-
-    const handleChange = ({ target }) => {
-        setData((prevState) => ({ ...prevState, [target.name]: target.value }));
-    };
-
-    const validatorConfig = {
-        email: {
-            isRequired: {
-                message: "Электронная почта обязательна для заполнения"
-            },
-            isEmail: {
-                message: "Электронная почта указана неверно"
-            }
-        },
-        pass: {
-            isRequired: {
-                message: "Пароль обязателен для заполнения"
-            },
-            isPass: {
-                message: "Пароль должен содержать минимум одну заглавную и строчную буквы, цифру и один спецзнак !@#$%^&*"
-            },
-            isMin: {
-                message: "Пароль должен содержать не менее 8 символов",
-                value: 8
-            }
-        }
-    };
-
-    useEffect(() => { validate(); }, [data]);
-
-    const validate = () => {
-        const errors = validator(data, validatorConfig);
-        setErrors(errors);
-        return Object.keys(errors).length === 0;
-    };
-
-    const isButtonActive = Object.keys(errors).length === 0;
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const isValid = validate();
-        if (!isValid) return;
-        console.log("Форма отправлена на сервер");
+    const { type } = useParams();
+    const [formtype, setFormType] = useState(
+        type === "register" ? type : "login"
+    );
+    const toggleFormType = (params) => {
+        setFormType((prevState) =>
+            prevState === "register" ? "login" : "register"
+        );
     };
 
     return (
         <div className="container mt-2">
             <div className="row">
                 <div className="col-md-6 offset-md-3 p-4 shadow">
-                    <h3 className="mb-4">Login</h3>
-                    <form onSubmit={handleSubmit}>
-                        <Textfield
-                            label="Электронная почта "
-                            name="email"
-                            onChange={handleChange}
-                            value={data.email}
-                            error={errors.email}
-                        />
-                        <Textfield
-                            label="Пароль "
-                            type="password"
-                            name="pass"
-                            onChange={handleChange}
-                            value={data.pass}
-                            error={errors.pass}
-                        />
-                        <button type="submit" disabled={!isButtonActive} className="btn btn-primary w-100 mx-auto">Отправить</button>
-                    </form>
+                    {formtype === "register" ? (
+                        <>
+                            <h3 className="mb-4">Register</h3>
+                            <RegisterForm />
+                            <p>
+                                Already have account?{" "}
+                                <a role="button" onClick={toggleFormType}>
+                                    Sign In
+                                </a>
+                            </p>
+                        </>
+                    ) : (
+                        <>
+                            <h3 className="mb-4">Login</h3>
+                            <LoginForm />
+                            <p>
+                                Dont have account?{" "}
+                                <a role="button" onClick={toggleFormType}>
+                                    Sign In
+                                </a>
+                            </p>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

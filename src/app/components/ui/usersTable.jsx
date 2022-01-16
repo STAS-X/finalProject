@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TableHeader from "./tableHeader";
-import TableBody from "./tableBody";
-import BookMark from "./bookmark";
-import QualitysList from "./qualitysList";
-import Table from "./table";
+import TableHeader from "../common/table/tableHeader";
+import TableBody from "../common/table/tableBody";
+import BookMark from "../common/bookmark";
+import Qualities from "./qualities";
+import Table from "../common/table/table";
 // import User from "./user";
 
 const UserTable = ({
@@ -19,7 +19,7 @@ const UserTable = ({
         qualities: {
             name: "Качества",
             component: (user) => {
-                return <QualitysList qualities={user.qualities} />;
+                return <Qualities qualities={user.qualities} />;
             }
         },
         professions: { path: "profession.name", name: "Профессия" },

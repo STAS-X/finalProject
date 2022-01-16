@@ -146,22 +146,36 @@ const users = [
 const fetchAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function () {
-            resolve(users);
+            resolve(() => users || null);
         }, 2000);
+    });
+
+const update = (id, data) =>
+    new Promise((resolve) => {
+        const users = JSON.parse(localStorage.getItem("allUsers"));
+        const userIndex = users.findIndex((u) => u._id === id);
+        users[userIndex] = { ...users[userIndex], ...data };
+        localStorage.setItem("allUsers", JSON.stringify(users));
+        resolve(users[userIndex]);
     });
 
 const fetchById = (id) =>
     new Promise((resolve) => {
         window.setTimeout(function () {
-            resolve(
-                users.filter((item, itemId) => {
-                    return (itemId + 1) === +id || item._id === id || id === -1;
-                })
-            );
+            resolve(() => {
+                return (
+                    users.filter((item, itemId) => {
+                        return (
+                            itemId + 1 === +id || item._id === id || id === -1
+                        );
+                    })[0] || null
+                );
+            });
         }, 2000);
     });
 
 export default {
     fetchAll,
+    update,
     fetchById
 };

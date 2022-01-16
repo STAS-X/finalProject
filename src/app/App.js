@@ -1,11 +1,11 @@
 import React from "react";
-import NavBar from "./components/navBar";
+import NavBar from "./components/ui/navBar";
 import Main from "./layouts/main";
 import Login from "./layouts/login";
 import Users from "./layouts/users";
-import UserProfile from "./components/userProfile";
-import NotFound from "./components/notfound";
+import NotFound from "./components/ui/notfound";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import Profile from "./layouts/profile";
 
 class App extends React.Component {
     constructor(props) {
@@ -50,6 +50,16 @@ class App extends React.Component {
                         <Route path="/login" component={Login} />
                         <Route path="/404" component={NotFound} />
                         <Route
+                            path="/users/:userId?/edit"
+                            /* render={() => (
+                                <Users
+                                    usersApp={this.state.value}
+                                    updateUsers={this.handleUpdateUsers}
+                                />
+                            )} */
+                            component={Profile}
+                        />
+                        <Route
                             path="/users/:userId?"
                             /* render={() => (
                                 <Users
@@ -58,10 +68,6 @@ class App extends React.Component {
                                 />
                             )} */
                             component={Users}
-                        />
-                        <Route
-                            path="/userProfile/:userId?"
-                            component={UserProfile}
                         />
                         <Redirect exact from="/" to="/main" />
                         <Redirect to="/404" />

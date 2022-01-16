@@ -3,6 +3,11 @@ import PropTypes from "prop-types";
 
 const Textfield = ({ label, type, name, value, error, onChange }) => {
     const [showPass, setShowPass] = useState(false);
+
+    const handleChange = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
+
     const getInputClassname = () => {
         return `form-control ${error ? "is-invalid" : ""}`;
     };
@@ -20,15 +25,20 @@ const Textfield = ({ label, type, name, value, error, onChange }) => {
                     type={showPass ? "text" : type}
                     id={name}
                     name={name}
-                    onChange={onChange}
+                    onChange={handleChange}
                     value={value}
                 />
                 {type === "password" && (
-                    <button className="btn btn-outline-info" type="button" onClick={toggleShowPass}>
-                        <i className={`bi bi-eye${showPass ? "-slash" : ""}`}></i>
+                    <button
+                        className="btn btn-outline-info"
+                        type="button"
+                        onClick={toggleShowPass}
+                    >
+                        <i
+                            className={`bi bi-eye${showPass ? "-slash" : ""}`}
+                        ></i>
                     </button>
-                )
-                }
+                )}
                 {error && <div className="invalid-feedback">{error}</div>}
             </div>
         </div>

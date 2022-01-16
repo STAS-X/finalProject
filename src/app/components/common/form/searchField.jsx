@@ -8,7 +8,7 @@ const Searchfield = ({ type, label, name, value, holder, error, onChange }) => {
 
     return (
         <div className="form-group">
-            <div className={"mb-4 row"}>
+            <div className="mb-4 row">
                 <label className="col col-md-auto col-form-label" htmlFor={name}>{label}</label>
                 <div className="col-sm-8 has-validation">
                     <input
