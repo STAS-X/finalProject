@@ -33,7 +33,7 @@ const UserProfile = ({ searchId }) => {
     if (userId) {
         return (
             <React.Fragment>
-                {/* eslint-disable-next-line array-callback-return */}
+                {/* eslint-disable-next-line array-callback-return  */}
                 {Object.keys(userId).map((propName) => {
                     switch (propName) {
                         case "name":
