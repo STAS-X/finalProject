@@ -15,7 +15,7 @@ const Profile = () => {
 
     const handleGoBack = () => {
         history.goBack();
-    }
+    };
 
     const userById = (
         JSON.parse(localStorage.getItem("allUsers")) || []
@@ -25,18 +25,19 @@ const Profile = () => {
             (userId && userId.indexOf("=") > -1 ? parseParams(userId) : userId)
     );
 
-    if (userById.length !== 1) 
-        history.replace("/users")
-    else
-        history.push(`/users/${userById._id}`);
+    if (userById.length !== 1) {
+        history.replace("/users");
+    }
 
     return (
         <div className="container mt-2">
-            <div className="row">
-            <button className="position-absolute top-0 start-50 btn btn-light btn-sm" 
+            <div className="row ">
+                <button
+                    className="top-0 start-0 mb-auto w-auto btn btn-primary btn-sm "
                     onClick={() => handleGoBack()}
-                            >Вернуться назад
-                            </button>
+                >
+                    Вернуться назад
+                </button>
                 <div className="col-md-6 offset-md-3 p-4 shadow">
                     <h3 className="mb-4">User Profile data</h3>
                     <EditUserForm userById={userById} />

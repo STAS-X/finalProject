@@ -10,6 +10,7 @@ import MultiSelectField from "../common/form/multiSelect";
 import * as yup from "yup";
 
 const EditUserForm = ({ userById }) => {
+    // eslint-disable-next-line no-unused-vars
     const history = useHistory();
 
     const [userProfileId] = useState(() => userById[0]);
@@ -42,7 +43,6 @@ const EditUserForm = ({ userById }) => {
         });
 
         api.professions.fetchAll().then((data) => {
-            console.log(data, userProfileId);
             // Задаем профессию текущего пользователя по умолчанию
             setData((prevState) => ({
                 ...prevState,
@@ -52,7 +52,9 @@ const EditUserForm = ({ userById }) => {
                     )[0].name || ""
             }));
             // Запрашиаем все профессии
-            setProfessions(data.map((prof) => ({ name: prof.name, value: prof._id })));
+            setProfessions(
+                data.map((prof) => ({ name: prof.name, value: prof._id }))
+            );
         });
         setUsers(JSON.parse(localStorage.getItem("allUsers")) || []);
 
@@ -168,8 +170,8 @@ const EditUserForm = ({ userById }) => {
         email: data.email,
         pass: data.pass,
         sex: data.sex,
-        profession: professions.filter(
-            (prof) => prof.name === data.professions)
+        profession: professions
+            .filter((prof) => prof.name === data.professions)
             .map((prof) => ({ name: prof.name, _id: prof.value }))[0],
         qualities: data.qualities.map((qualitie, ind) => ({
             _id: qualitie.value,

@@ -9,6 +9,7 @@ import QualitysList from "../../../ui/qualities/qualitysList";
 
 const UserProfile = ({ searchId }) => {
     const [userId, setUserId] = useState({});
+    console.log(searchId);
 
     useEffect(() => {
         if (searchId) {
@@ -27,7 +28,7 @@ const UserProfile = ({ searchId }) => {
 
     const history = useHistory();
     const handleSave = () => {
-        history.replace(`/users/${userId._id}/edit`);
+        history.push(`/users/${userId._id}/edit`);
     };
 
     if (userId) {

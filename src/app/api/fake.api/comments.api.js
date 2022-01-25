@@ -52,7 +52,7 @@ const add = (data) =>
             };
             comments.push(newComment);
             localStorage.setItem("comments", JSON.stringify(comments));
-            resolve(newComment);
+            resolve(comments);
         }, 200);
     });
 
@@ -61,10 +61,10 @@ const remove = (id) =>
         window.setTimeout(function () {
             const comments = JSON.parse(localStorage.getItem("comments"));
             const newComments = comments.filter((x) => x._id !== id);
-            console.log(id);
-            console.log(newComments);
+            // console.log(id);
+            // console.log(newComments);
             localStorage.setItem("comments", JSON.stringify(newComments));
-            resolve(id);
+            resolve(newComments);
         }, 200);
     });
 export default {
