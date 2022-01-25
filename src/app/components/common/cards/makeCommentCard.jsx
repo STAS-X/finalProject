@@ -60,7 +60,7 @@ const MakeCommentCard = ({ users }) => {
                     <div className="mb-4">
                         <SelectField
                             label={"Выберите пользователя:"}
-                            defaultOption="Choose..."
+                            defaultOption="Choose... "
                             name="users"
                             options={users}
                             onChange={handleChange}
