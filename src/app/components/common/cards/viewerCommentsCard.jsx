@@ -50,10 +50,10 @@ const ViewerCommentCard = ({ users, newCommentId }) => {
     };
 
     if (!comments) return <SearchStatus length={-3} />;
-    if (comments && comments.length === 0) return <></>;
-    if (comments && comments.length > 0) {
-        return (
-            <div className="card mb-3">
+
+    return (
+        <div className="card mb-3">
+            {comments && comments.length > 0 && (
                 <div className="card-body">
                     <h2>Comments</h2>
                     <hr />
@@ -69,9 +69,9 @@ const ViewerCommentCard = ({ users, newCommentId }) => {
                         />
                     ))}
                 </div>
-            </div>
-        );
-    }
+            )}
+        </div>
+    );
 };
 
 ViewerCommentCard.propTypes = {
