@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const Textfield = ({ label, type, name, value, error, onChange }) => {
+const Textfield = ({ label, type, name, rows, value, error, onChange }) => {
     const [showPass, setShowPass] = useState(false);
 
     const handleChange = ({ target }) => {
@@ -20,14 +20,26 @@ const Textfield = ({ label, type, name, value, error, onChange }) => {
         <div className="mb-4">
             <label htmlFor={name}>{label}</label>
             <div className="input-group has-validation">
-                <input
-                    className={getInputClassname()}
-                    type={showPass ? "text" : type}
-                    id={name}
-                    name={name}
-                    onChange={handleChange}
-                    value={value}
-                />
+                {(type === "textarea" && (
+                    <textarea
+                        className={getInputClassname()}
+                        id={name}
+                        name={name}
+                        rows={rows}
+                        onChange={handleChange}
+                        value={value}
+                    />
+                )) ||
+                    (type !== "textarea" && (
+                        <input
+                            className={getInputClassname()}
+                            type={showPass ? "text" : type}
+                            id={name}
+                            name={name}
+                            onChange={handleChange}
+                            value={value}
+                        />
+                    ))}
                 {type === "password" && (
                     <button
                         className="btn btn-outline-info"
@@ -52,6 +64,7 @@ Textfield.defaultProps = {
 Textfield.propTypes = {
     label: PropTypes.string,
     type: PropTypes.string,
+    rows: PropTypes.number,
     name: PropTypes.string,
     value: PropTypes.string,
     error: PropTypes.string,

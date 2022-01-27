@@ -42,12 +42,14 @@ const SearchStatus = ({ length, userId }) => {
                         : "Никто не тусанет с тобой"
                     : length === -2
                     ? "Список пользователей загружается..."
+                    : length === -3
+                    ? "Комментарии пользователей загружаются..."
                     : "Профиль пользователя загружается..."}
             </span>
             {length === -1 && !userId && (
                 <button
                     className="btn btn-outline-secondary m-2"
-                    style ={buttonToBlock}
+                    style={buttonToBlock}
                     onClick={() => handleReset()}
                 >
                     Все пользователи

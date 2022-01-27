@@ -1,17 +1,22 @@
-import React, { useHistory } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const InfoCard = ({ name, id, avatar, profession, rate }) => {
+    const history = useHistory();
+    console.log(avatar);
     const handleEditUserProfile = () => {
-        const history = useHistory();
         history.push(`/users/${id}/edit`);
     };
 
     return (
         <div className="card mb-3">
             <div className="card-body">
-                <button className="position-absolute top-0 end-0 btn btn-light btn-sm" onClick={handleEditUserProfile}>
-                    <i className="bi bi-gear"></i>
+                <button
+                    className="btn btn-light btn-sm position-absolute top-0 end-0"
+                    onClick={handleEditUserProfile}
+                >
+                    <i className="bi bi-gear"> </i>
                 </button>
                 <div className="d-flex flex-column align-items-center text-center position-relative">
                     <img

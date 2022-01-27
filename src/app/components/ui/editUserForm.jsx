@@ -34,6 +34,7 @@ const EditUserForm = ({ userById }) => {
 
     useEffect(() => {
         validate();
+        return () => {};
     }, [data]);
 
     useEffect(() => {
@@ -59,7 +60,7 @@ const EditUserForm = ({ userById }) => {
         setUsers(JSON.parse(localStorage.getItem("allUsers")) || []);
 
         return () => {
-            console.log("edtUserForm unmounted");
+            console.log("editUserForm unmounted");
         };
     }, []);
 

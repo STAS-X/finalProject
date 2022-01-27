@@ -27,7 +27,7 @@ if (!localStorage.getItem("comments")) {
 const fetchAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function () {
-            resolve(comments);
+            resolve(JSON.parse(localStorage.getItem("comments")) || comments);
         }, 200);
     });
 
@@ -52,7 +52,7 @@ const add = (data) =>
             };
             comments.push(newComment);
             localStorage.setItem("comments", JSON.stringify(comments));
-            resolve(comments);
+            resolve(newComment);
         }, 200);
     });
 

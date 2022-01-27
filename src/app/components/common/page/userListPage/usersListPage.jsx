@@ -167,6 +167,7 @@ const usersListPage = () => {
             if (selectedProf) setSelectedProf();
             setSortBy((prevState) => ({ ...prevState, path: "" }));
             localStorage.setItem("allUsers", JSON.stringify(null));
+            localStorage.setItem("avatars", JSON.stringify(null));
             location.replace("/users/reset");
         };
 

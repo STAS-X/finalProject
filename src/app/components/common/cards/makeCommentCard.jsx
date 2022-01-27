@@ -2,22 +2,24 @@ import React, { useState, useEffect } from "react";
 import SelectField from "../form/selectField";
 import Textfield from "../form/textField";
 import PropTypes from "prop-types";
+import api from "../../../api";
 import * as yup from "yup";
 
-const MakeCommentCard = ({ users }) => {
+const MakeCommentCard = ({ users, onAddComment }) => {
     const [errors, setErrors] = useState({});
 
     const [data, setData] = useState({
-        users: "",
+        user: "",
         comment: ""
     });
 
     useEffect(() => {
         validate();
+        return () => {};
     }, [data]);
 
     const checkoutPersonData = yup.object().shape({
-        users: yup.string().required("users_Необхоимо выбрать пользователя"),
+        user: yup.string().required("user_Необхоимо выбрать пользователя"),
         comment: yup.string().required("comment_Необхоимо указать комментарий")
     });
 
@@ -52,6 +54,21 @@ const MakeCommentCard = ({ users }) => {
         setData((prevState) => ({ ...prevState, [target.name]: target.value }));
     };
 
+    const handlePublic = () => {
+        api.comments
+            .add({
+                userId: data.user,
+                pageId: data.user,
+                content: data.comment
+            })
+            .then((data) => onAddComment(data._id));
+
+        setData({
+            user: "",
+            comment: ""
+        });
+    };
+
     return (
         <div className="card mb-2">
             <div className="card-body">
@@ -61,19 +78,22 @@ const MakeCommentCard = ({ users }) => {
                         <SelectField
                             label={"Выберите пользователя:"}
                             defaultOption="Choose... "
-                            name="users"
-                            options={users}
+                            name="user"
+                            options={users.map((user) => ({
+                                _id: user._id,
+                                name: user.name
+                            }))}
                             onChange={handleChange}
-                            value={data.users}
-                            error={errors.users}
+                            value={data.user}
+                            error={errors.user}
                         />
                     </div>
                     <div className="mb-4">
                         <Textfield
                             label="Сообщение "
                             type="textarea"
-                            row="3"
-                            name="pass"
+                            rows={5}
+                            name="comment"
                             onChange={handleChange}
                             value={data.comment}
                             error={errors.comment}
@@ -81,6 +101,7 @@ const MakeCommentCard = ({ users }) => {
                         <button
                             disabled={!isPublished}
                             className="btn btn-primary w-auto m-4 end-0"
+                            onClick={handlePublic}
                         >
                             Опубликовать
                         </button>
@@ -92,7 +113,8 @@ const MakeCommentCard = ({ users }) => {
 };
 
 MakeCommentCard.propTypes = {
-    users: PropTypes.array
+    users: PropTypes.array,
+    onAddComment: PropTypes.func
 };
 
 export default MakeCommentCard;
