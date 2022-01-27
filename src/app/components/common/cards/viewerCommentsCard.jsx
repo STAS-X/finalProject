@@ -37,14 +37,12 @@ const ViewerCommentCard = ({ users, newCommentId }) => {
 
     const handleUpdateComments = () => {
         api.comments.fetchAll().then((data) => {
-            console.log(data, "Добавление нового коммента");
             setComments(handleSortAndWrapArray(data));
         });
     };
 
     const handleCommentDelete = (commentId) => {
         api.comments.remove(commentId).then((data) => {
-            console.log(data, "Без удаленного коммента");
             setComments(handleSortAndWrapArray(data));
         });
     };

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const InfoCard = ({ name, id, avatar, profession, rate }) => {
     const history = useHistory();
-    console.log(avatar);
+
     const handleEditUserProfile = () => {
         history.push(`/users/${id}/edit`);
     };
@@ -20,11 +20,7 @@ const InfoCard = ({ name, id, avatar, profession, rate }) => {
                 </button>
                 <div className="d-flex flex-column align-items-center text-center position-relative">
                     <img
-                        src={`https://avatars.dicebear.com/api/avataaars/${(
-                            avatar || Math.random() + 1
-                        )
-                            .toString(36)
-                            .substring(7)}.svg`}
+                        src={`https://avatars.dicebear.com/api/avataaars/${avatar}`}
                         className=" shadow-1-strong me-3"
                         width="150"
                     />
