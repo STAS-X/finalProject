@@ -61,7 +61,7 @@ const ViewerCommentCard = ({ users, newCommentId }) => {
                             id={comment._id}
                             name={comment.name}
                             avatar={comment.avatar}
-                            timeStamp={comment.created_at}
+                            timeStamp={Number(comment.created_at)}
                             content={comment.content}
                             onCommentDelete={handleCommentDelete}
                         />
