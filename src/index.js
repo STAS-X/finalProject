@@ -2,9 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./app/App";
+import logger from "./app/services/log.service"
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
+import "react-toastify/dist/ReactToastify.css";
+
+logger.init();
 
 ReactDOM.render(
     <React.StrictMode>

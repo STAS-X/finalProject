@@ -5,8 +5,9 @@ import colors from "../../constants/colors.json";
 import useForm from "../../hooks/useForm";
 import PropTypes from "prop-types";
 
-const EditForm = ({ data, onSubmit }) => {
-	const {form, handleChange, handleSubmit} = useForm({}, onSubmit);
+const QualityForm = ({ data, onSubmit }) => {
+	const {form, handleChange, handleSubmit} = useForm(data, onSubmit);
+
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -28,8 +29,8 @@ const EditForm = ({ data, onSubmit }) => {
 	);
 };
 
-EditForm.propTypes = {
+QualityForm.propTypes = {
 	data: PropTypes.object
 };
 
-export default EditForm;
+export default QualityForm;
