@@ -12,7 +12,7 @@ export const QualitiesProvider = ({ children }) => {
     const [qualities, setQualities] =useState([]);
     const [, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);
-    	// eslint-disable-next-line react-hooks/exhaustive-deps
+
 	useEffect( () => {
 		const getQualities = async () => {
             try {
