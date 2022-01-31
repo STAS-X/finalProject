@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import UsersListPage from "../components/common/page/userListPage/usersListPage";
 import UsersProfile from "../components/common/page/usersPage/usersProfile";
 import query from "query-string";
+import UserProvider from "../hooks/useUsers";
 
 const Users = () => {
     const { userId } = useParams();
@@ -14,7 +15,15 @@ const Users = () => {
     const searchId = (userId && userId.indexOf("=") > -1) ? parseParams(userId) : userId;
 
     return (
-        <>{searchId && searchId !== "reset" ? <UsersProfile searchId={searchId} /> : <UsersListPage />}</>
+        <>
+            <UserProvider>
+                {searchId && searchId !== "reset" ? (
+                    <UsersProfile searchId={searchId} />
+                ) : (
+                    <UsersListPage />
+                )}
+            </UserProvider>
+        </>
     );
 };
 

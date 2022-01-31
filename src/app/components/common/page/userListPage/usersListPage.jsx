@@ -8,6 +8,7 @@ import SearchStatus from "../../../ui/searchStatus";
 import UsersTable from "../../../ui/usersTable";
 import Searchfield from "../../form/searchField";
 import { useParams, useHistory } from "react-router-dom";
+import { useUsers } from "../../../../hooks/useUsers";
 import _ from "lodash";
 import api from "../../../../api";
 
@@ -39,34 +40,37 @@ const usersListPage = () => {
         // eslint-disable-next-line curly
         history.replace("/users");
 
-    const [users, setUsers] = useState(() => {
-        const usersApp = JSON.parse(localStorage.getItem("allUsers")) || [];
-        if (usersApp && params.userId !== "reset") {
-            setTimeout(function () {
-                setUsers(
-                    usersApp.filter((item, itemId) => {
-                        return (
-                            itemId + 1 === userId ||
-                            item._id === userId ||
-                            userId === -1
-                        );
-                    })
-                );
-            }, 1000);
-        } else {
-            api.users.fetchAll().then((data) => setUsers(data));
-        }
-    });
+    const [, setUsers] = useState([]);
 
-    useEffect(() => {
-        if (/* users && users.length > 0 && */ userId === -1 && !searchUser) {
-            localStorage.setItem("allUsers", JSON.stringify(users || []));
-        }
+    const { users } = useUsers();
+    // const [users, setUsers] = useState(() => {
+    //     const usersApp = JSON.parse(localStorage.getItem("allUsers")) || [];
+    //     if (usersApp && params.userId !== "reset") {
+    //         setTimeout(function () {
+    //             setUsers(
+    //                 usersApp.filter((item, itemId) => {
+    //                     return (
+    //                         itemId + 1 === userId ||
+    //                         item._id === userId ||
+    //                         userId === -1
+    //                     );
+    //                 })
+    //             );
+    //         }, 1000);
+    //     } else {
+    //         api.users.fetchAll().then((data) => setUsers(data));
+    //     }
+    // });
 
-        return () => {
-            // console.log("unmount users", userId);
-        };
-    }, [users]);
+    // useEffect(() => {
+    //     if (/* users && users.length > 0 && */ userId === -1 && !searchUser) {
+    //         localStorage.setItem("allUsers", JSON.stringify(users || []));
+    //     }
+
+    //     return () => {
+    //         // console.log("unmount users", userId);
+    //     };
+    // }, [users]);
 
     useEffect(() => {
         return () => {
@@ -79,38 +83,42 @@ const usersListPage = () => {
     useEffect(() => setCurrentPage(1), [selectedProf]);
 
     useEffect(() => {
-        if (document.querySelector("input[name='search']")) document.querySelector("input[name='search']").focus();
+        if (document.querySelector("input[name='search']")) {
+            document.querySelector("input[name='search']").focus();
+        }
     }, [searchUser]);
 
     const handleDelete = (userId) => {
-        const usersDelete = JSON.parse(localStorage.getItem("allUsers")).filter(
-            (user) => user._id !== userId
-        );
-        localStorage.setItem("allUsers", JSON.stringify(usersDelete || []));
+        // const usersDelete = JSON.parse(localStorage.getItem("allUsers")).filter(
+        //     (user) => user._id !== userId
+        // );
+        // localStorage.setItem("allUsers", JSON.stringify(usersDelete || []));
 
-        setUsers(usersDelete);
+        // setUsers(usersDelete);
+        console.log(userId);
 
-        if (
-            !(
-                usersDelete.filter((user) => user._id !== userId).length >
-                    (currentPage - 1) * pageSize || currentPage === 1
-            )
-        ) {
-            setCurrentPage((prevState) => prevState - 1);
-        }
+        // if (
+        //     !(
+        //         usersDelete.filter((user) => user._id !== userId).length >
+        //             (currentPage - 1) * pageSize || currentPage === 1
+        //     )
+        // ) {
+        setCurrentPage((prevState) => prevState - 1);
+        // }
 
         if (searchUser) updateSearch(searchUser);
     };
 
     const handleToggleBookMark = (id) => {
-        setUsers(
-            users.map((user) => {
-                if (user._id === id) {
-                    return { ...user, bookmark: !user.bookmark };
-                }
-                return user;
-            })
-        );
+        // setUsers(
+        //     users.map((user) => {
+        //         if (user._id === id) {
+        //             return { ...user, bookmark: !user.bookmark };
+        //         }
+        //         return user;
+        //     })
+        // );
+        console.log(id);
     };
 
     const handlePageChange = (pageIndex) => {
@@ -236,11 +244,7 @@ const usersListPage = () => {
         );
     }
     if (users && users.length === 0) {
-        return (
-            <SearchStatus
-                length={-1}
-            />
-        );
+        return <SearchStatus length={-1} />;
     }
     return <SearchStatus length={-2} userId={userId} />;
 };

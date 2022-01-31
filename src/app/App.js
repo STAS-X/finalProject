@@ -5,7 +5,9 @@ import Login from "./layouts/login";
 import Users from "./layouts/users";
 import NotFound from "./components/ui/notfound";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Profile from "./layouts/profile";
+import { ProfessionProvider } from "./hooks/useProfessions";
 
 class App extends React.Component {
     constructor(props) {
@@ -45,34 +47,37 @@ class App extends React.Component {
             <div>
                 <NavBar />
                 <BrowserRouter>
-                    <Switch>
-                        <Route path="/main" component={Main} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/404" component={NotFound} />
-                        <Route
-                            path="/users/:userId?/edit"
-                            /* render={() => (
+                    <ProfessionProvider>
+                        <Switch>
+                            <Route path="/login" component={Login} />
+                            <Route
+                                path="/users/:userId?/edit"
+                                /* render={() => (
                                 <Users
                                     usersApp={this.state.value}
                                     updateUsers={this.handleUpdateUsers}
                                 />
                             )} */
-                            component={Profile}
-                        />
-                        <Route
-                            path="/users/:userId?"
-                            /* render={() => (
+                                component={Profile}
+                            />
+                            <Route
+                                path="/users/:userId?"
+                                /* render={() => (
                                 <Users
                                     usersApp={this.state.value}
                                     updateUsers={this.handleUpdateUsers}
                                 />
                             )} */
-                            component={Users}
-                        />
-                        <Redirect exact from="/" to="/main" />
-                        <Redirect to="/404" />
-                    </Switch>
+                                component={Users}
+                            />
+                            <Route path="/main" component={Main} />
+                            <Route path="/404" component={NotFound} />
+                            <Redirect exact from="/" to="/main" />
+                            <Redirect to="/404" />
+                        </Switch>
+                    </ProfessionProvider>
                 </BrowserRouter>
+                <ToastContainer />
             </div>
         );
     }

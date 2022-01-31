@@ -5,6 +5,7 @@ import TableBody from "../common/table/tableBody";
 import BookMark from "../common/bookmark";
 import Qualities from "./qualities";
 import Table from "../common/table/table";
+import Profession from "./profession";
 // import User from "./user";
 
 const UserTable = ({
@@ -22,7 +23,7 @@ const UserTable = ({
                 return <Qualities qualities={user.qualities} />;
             }
         },
-        professions: { path: "profession.name", name: "Профессия" },
+        professions: { name: "Профессия", component: (user) => <Profession id={user.profession}/> },
         completedMeetings: {
             path: "completedMeetings",
             name: "Встретился, раз"
