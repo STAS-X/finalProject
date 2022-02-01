@@ -9,6 +9,7 @@ import UsersTable from "../../../ui/usersTable";
 import Searchfield from "../../form/searchField";
 import { useParams, useHistory } from "react-router-dom";
 import { useUsers } from "../../../../hooks/useUsers";
+import { useQualities } from "../../../../hooks/useQualities";
 import _ from "lodash";
 import api from "../../../../api";
 
@@ -43,6 +44,17 @@ const usersListPage = () => {
     const [, setUsers] = useState([]);
 
     const { users } = useUsers();
+    const { qualities } = useQualities();
+
+    useEffect(() => {
+        if (qualities.length > 0) {
+            users.forEach((user) => {
+                user.qualities = user.qualities.map((id) =>
+                    qualities.filter((q) => q._id === id)[0]
+                );
+            });
+        }
+    }, [users, qualities]);
     // const [users, setUsers] = useState(() => {
     //     const usersApp = JSON.parse(localStorage.getItem("allUsers")) || [];
     //     if (usersApp && params.userId !== "reset") {

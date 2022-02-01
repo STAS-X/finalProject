@@ -20,10 +20,17 @@ const UserTable = ({
         qualities: {
             name: "Качества",
             component: (user) => {
-                return <Qualities qualities={user.qualities} />;
+                return typeof user.qualities[0] === "object" ? (
+                    <Qualities qualities={user.qualities} />
+                ) : (
+                    "Loading..."
+                );
             }
         },
-        professions: { name: "Профессия", component: (user) => <Profession id={user.profession}/> },
+        professions: {
+            name: "Профессия",
+            component: (user) => <Profession id={user.profession} />
+        },
         completedMeetings: {
             path: "completedMeetings",
             name: "Встретился, раз"
