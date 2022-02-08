@@ -24,7 +24,7 @@ export const ProfessionProvider = ({ children }) => {
         getProfessionsList();
     }, []);
     function errorCatcher(error) {
-        const { message } = error.response.data;
+        const { message } = error.response.data.error;
         setError(message);
     }
     function getProfession(id) {

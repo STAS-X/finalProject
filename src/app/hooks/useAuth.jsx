@@ -1,5 +1,8 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import userService from "../services/user.service";
+import localStorageService from "../services/localStorage.service";
 import axios from "axios";
 
 const httpAuth = axios.create();
@@ -10,19 +13,53 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-    async function signUp({ email, password }) {
-        const key = "AIzaSyDYS2BdWvzjqhGs3OQHolXOKJNWc5T8Bvg";
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`;
-        const { data } = await httpAuth.post(url, {
-            email,
-            password,
-            returnSecureToken: true
-        });
-        console.log(data);
+    const [currentUser, setUser] = useState({});
+    const [error, setError] = useState(null);
+    async function signUp({ email, password, ...rest }) {
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`;
+
+        try {
+            const { data } = await httpAuth.post(url, {
+                email,
+                password,
+                returnSecureToken: true
+            });
+            localStorageService.setToken(data);
+            await createUser({ _id: data.localId, email, ...rest });
+        } catch (error) {
+            errorCatcher(error);
+            const { code, message } = error.response.data.error;
+            if (code === 400 && message === "EMAIL_EXISTS") {
+                const errorObject = {
+                    email: "Пользователь с таким Email уже существует"
+                };
+                console.log("error occured", errorObject);
+                throw errorObject;
+            }
+        }
+    }
+    async function createUser(data) {
+        try {
+            const { content } = userService.create(data);
+            setUser(content);
+        } catch (error) {
+            errorCatcher(error);
+        }
     }
 
+    function errorCatcher(error) {
+        const { message } = error.response.data.error;
+        setError(message);
+    }
+    useEffect(() => {
+        if (error !== null) {
+            toast(error);
+            setError(null);
+        }
+    }, [error]);
+
     return (
-        <AuthContext.Provider value={{ signUp }}>
+        <AuthContext.Provider value={{ signUp, currentUser }}>
             {children}
         </AuthContext.Provider>
     );
