@@ -24,7 +24,10 @@ const AuthProvider = ({ children }) => {
                 password,
                 returnSecureToken: true
             });
-            localStorageService.setToken(data);
+            localStorageService.setToken({
+                ...data,
+                operation: "REGISTER"
+            });
             await createUser({ _id: data.localId, email, ...rest });
         } catch (error) {
             errorCatcher(error);
@@ -33,14 +36,62 @@ const AuthProvider = ({ children }) => {
                 const errorObject = {
                     email: "Пользователь с таким Email уже существует"
                 };
-                console.log("error occured", errorObject);
+                // console.log("error occured", errorObject);
                 throw errorObject;
             }
         }
     }
+
+    async function logIn({ email, password }) {
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_KEY}`;
+
+        try {
+            const { data } = await httpAuth.post(url, {
+                email,
+                password,
+                returnSecureToken: true
+            });
+            localStorageService.setToken({
+                ...data,
+                operation: "AUTH"
+            });
+            await getAccountUser({ _id: data.localId });
+        } catch (error) {
+            errorCatcher(error);
+            const { code, message } = error.response.data.error;
+            if (code === 400) {
+                const errorObject = {
+                    email: `При попытке регистрации произошла ошибка: ${message}`
+                };
+                switch (message) {
+                    case "EMAIL_NOT_FOUND":
+                        errorObject.email =
+                            "Пользователь с таким Email не найден";
+                        break;
+                    case "INVALID_PASSWORD":
+                        errorObject.email = "Пароль указан неверно";
+                        break;
+                    case "USER_DISABLED":
+                        errorObject.email = "Пароль указан неверно";
+                        break;
+                }
+                throw errorObject;
+            }
+        }
+    }
+
     async function createUser(data) {
         try {
             const { content } = userService.create(data);
+            setUser(content);
+        } catch (error) {
+            errorCatcher(error);
+        }
+    }
+
+    async function getAccountUser(data) {
+        try {
+            const { content } = userService.get(data._id);
             setUser(content);
         } catch (error) {
             errorCatcher(error);
@@ -59,7 +110,7 @@ const AuthProvider = ({ children }) => {
     }, [error]);
 
     return (
-        <AuthContext.Provider value={{ signUp, currentUser }}>
+        <AuthContext.Provider value={{ signUp, logIn, currentUser }}>
             {children}
         </AuthContext.Provider>
     );

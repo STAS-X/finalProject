@@ -7,8 +7,15 @@ const userService = {
         const { data } = await httpService.get(userEndpoint);
         return data;
     },
+    getById: async (userId) => {
+        const { data } = await httpService.get(userEndpoint + userId);
+        return data;
+    },
     create: async (payLoad) => {
-        const { data } = await httpService.put(userEndpoint + payLoad._id, payLoad);
+        const { data } = await httpService.put(
+            userEndpoint + payLoad._id,
+            payLoad
+        );
         return data;
     }
 };

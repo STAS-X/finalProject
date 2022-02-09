@@ -6,6 +6,7 @@ import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
+import { toast } from "react-toastify";
 import { useQualities } from "../../hooks/useQualities";
 import { useProfessions } from "../../hooks/useProfession";
 import { useAuth } from "../../hooks/useAuth";
@@ -95,9 +96,10 @@ const RegisterForm = () => {
         };
         try {
             await signUp(newData);
+            toast.success(`Пользователь [${newData.email}] успешно зарегистрирован`);
             history.push("/");
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             // const { code, message } = error.response.data.error;
             setErrors(error);
             // throw new Error("");
