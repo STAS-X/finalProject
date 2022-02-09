@@ -66,7 +66,9 @@ const LoginForm = () => {
 
         try {
             await logIn(newData);
-            toast.success(`Пользователь [${newData.email}] вошел в систему`);
+            toast.success(`Пользователь [${newData.email}] вошел в систему`, {
+                position: "top-center"
+            });
             history.push("/");
         } catch (error) {
             // console.log(error);

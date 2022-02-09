@@ -96,7 +96,12 @@ const RegisterForm = () => {
         };
         try {
             await signUp(newData);
-            toast.success(`Пользователь [${newData.email}] успешно зарегистрирован`);
+            toast.success(
+                `Пользователь [${newData.email}] успешно зарегистрирован`,
+                {
+                    position: "top-center"
+                }
+            );
             history.push("/");
         } catch (error) {
             // console.log(error);
