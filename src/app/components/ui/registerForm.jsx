@@ -17,6 +17,7 @@ const RegisterForm = () => {
         email: "",
         password: "",
         profession: "",
+        name: "",
         sex: "male",
         qualities: [],
         licence: false
@@ -74,6 +75,15 @@ const RegisterForm = () => {
                 message:
                     "Вы не можете использовать наш сервис без подтверждения лицензионного соглашения"
             }
+        },
+        name: {
+            isRequired: {
+                message: "Имя пользователя обязательно для заполнения"
+            },
+            min: {
+                message: "Имя должно состоять минимум из 3 символов",
+                value: 3
+            }
         }
     };
     useEffect(() => {
@@ -119,6 +129,13 @@ const RegisterForm = () => {
                 value={data.email}
                 onChange={handleChange}
                 error={errors.email}
+            />
+            <TextField
+                label="Имя пользователя"
+                name="name"
+                value={data.name}
+                onChange={handleChange}
+                error={errors.name}
             />
             <TextField
                 label="Пароль"
