@@ -69,10 +69,10 @@ const AuthProvider = ({ children }) => {
                             "Пользователь с таким Email не найден";
                         break;
                     case "INVALID_PASSWORD":
-                        errorObject.email = "Пароль указан неверно";
+                        errorObject.password = "Пароль указан неверно";
                         break;
                     case "USER_DISABLED":
-                        errorObject.email = "Пароль указан неверно";
+                        errorObject.email = `Пользователь ${email} заблокирован в БД`;
                         break;
                 }
                 throw errorObject;
