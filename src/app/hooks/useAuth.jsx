@@ -18,7 +18,7 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-    const [currentUser, setUser] = useState({});
+    const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
 
     function randomInt(min, max) {
@@ -85,10 +85,10 @@ const AuthProvider = ({ children }) => {
                             "Пользователь с таким Email не найден";
                         break;
                     case "INVALID_PASSWORD":
-                        errorObject.email = "Пароль указан неверно";
+                        errorObject.password = "Пароль указан неверно";
                         break;
                     case "USER_DISABLED":
-                        errorObject.email = "Пароль указан неверно";
+                        errorObject.email = "Пользователь заблокирован в БД";
                         break;
                 }
                 throw errorObject;
