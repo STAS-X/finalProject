@@ -8,6 +8,8 @@ import NavBar from "./components/ui/navBar";
 import { ProfessionProvider } from "./hooks/useProfession";
 import { QualitiesProvider } from "./hooks/useQualities";
 import AuthProvider from "./hooks/useAuth";
+import ProtectedRoute from "./components/common/protectedRoute";
+import LogOut from "./layouts/logout";
 
 function App() {
     toast.configure();
@@ -19,13 +21,13 @@ function App() {
                 <QualitiesProvider>
                     <ProfessionProvider>
                         <Switch>
-                            <Route
+                            <ProtectedRoute
                                 path="/users/:userId?/:edit?"
                                 component={Users}
                             />
 
                             <Route path="/login/:type?" component={Login} />
-
+                            <Route path="/logout" component={LogOut} />
                             <Route path="/" exact component={Main} />
                             <Redirect to="/" />
                         </Switch>

@@ -35,12 +35,20 @@ export function getUserId() {
     return localStorage.getItem(USERID_TOKEN);
 }
 
+export function removeAuthData() {
+    localStorage.removeItem(USERID_TOKEN);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(EXPIRES_KEY);
+    localStorage.removeItem(OPERATION_KEY);
+}
+
 const localStorageService = {
     setToken,
     getAccessToken,
     getRefreshToken,
     getTokenExpiresDate,
-    getUserId
+    getUserId,
+    removeAuthData
 };
 
 export default localStorageService;

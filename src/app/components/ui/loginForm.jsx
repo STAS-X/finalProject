@@ -8,6 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 const LoginForm = () => {
     const history = useHistory();
+    console.log(history.location);
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -69,7 +70,11 @@ const LoginForm = () => {
             toast.success(`Пользователь [${newData.email}] вошел в систему`, {
                 position: "top-center"
             });
-            history.push("/");
+            history.push(
+                history.location.state
+                    ? history.location.state.from.pathname
+                    : "/"
+            );
         } catch (error) {
             // console.log(error);
             // const { code, message } = error.response.data.error;
