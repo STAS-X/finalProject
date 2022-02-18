@@ -6,6 +6,8 @@ export function validator(data, config) {
             case "isRequired": {
                 if (typeof data === "boolean") {
                     statusValidate = !data;
+                } if (typeof data === "object") {
+                    statusValidate = !(data && Array.isArray(data) && data.length > 0);
                 } else {
                     statusValidate = data.trim() === "";
                 }
