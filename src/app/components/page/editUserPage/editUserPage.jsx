@@ -18,9 +18,10 @@ const EditUserPage = () => {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
     const [, setError] = useState(null);
-    const { currentUser } = useAuth();
+    const { updateNavBar, currentUser } = useAuth();
     const { getUserById, getUsers } = useUser();
     const [user] = useState(getUserById(userId));
+    const [users, setUsers] = useState([]);
 
     const transformData = (data) => {
         return data.map((item) => ({ label: item.name, value: item._id }));
@@ -30,6 +31,7 @@ const EditUserPage = () => {
 
     const getQualities = (elements) => {
         const qualitiesArray = [];
+
         for (const elem of elements) {
             for (const quality in qualities) {
                 if (elem === qualities[quality]._id) {
@@ -41,19 +43,14 @@ const EditUserPage = () => {
     };
 
     const [data, setData] = useState(
-        user
-            ? {
-                  ...user,
-                  qualities: transformData(getQualities(user.qualities))
-              }
-            : {
-                  _id: "",
-                  name: "",
-                  email: "",
-                  profession: "",
-                  sex: "male",
-                  qualities: []
-              }
+        user || {
+            _id: "",
+            name: "",
+            email: "",
+            profession: "",
+            sex: "male",
+            qualities: []
+        }
     );
 
     const [errors, setErrors] = useState({});
@@ -72,7 +69,7 @@ const EditUserPage = () => {
                 qualities: data.qualities.map((qual) => qual.value)
             });
             if (content) {
-                getUsers();
+                getUsers().then((data) => setUsers(data));
                 toast.success(
                     `Данные пользователя [${
                         content.name || content.email
@@ -81,7 +78,7 @@ const EditUserPage = () => {
                         position: "top-center"
                     }
                 );
-                history.push(`/users/${data._id}`);
+                // return <Redirect to={`/users/${data._id}`} />;
             }
         } catch (error) {
             errorCatcher(error);
@@ -94,10 +91,26 @@ const EditUserPage = () => {
     }
 
     useEffect(() => {
+        setData((prevData) => ({
+            ...prevData,
+            qualities: transformData(getQualities(prevData.qualities))
+        }));
+    }, []);
+    useEffect(() => {
         validate();
         if (data._id) setIsLoading(false);
     }, [data]);
+
     useEffect(() => {
+        if (users && users.length > 0) {
+            history.push(`/users/${data._id}`);
+            updateNavBar();
+            // setTimeout(() => history.go(0), 0);
+        }
+    }, [users]);
+
+    useEffect(() => {
+        console.log(getQualities(user.qualities));
         if (user && currentUser._id !== userId) {
             toast.warn(
                 `Пользователь [${

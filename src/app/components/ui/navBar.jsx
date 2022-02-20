@@ -1,45 +1,49 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
 import NavProfile from "./navProfile";
+import { useAuth } from "../../hooks/useAuth";
 
 const NavBar = () => {
     const { currentUser } = useAuth();
     return (
         <nav className="navbar">
-            <div className="container-fluid">
-                <ul className="nav">
-                    <li className="nav-item">
-                        <Link className="nav-link " aria-current="page" to="/">
-                            Main
-                        </Link>
-                    </li>
-                    {currentUser && (
+                <div className="container-fluid">
+                    <ul className="nav">
                         <li className="nav-item">
                             <Link
                                 className="nav-link "
                                 aria-current="page"
-                                to="/users"
+                                to="/"
                             >
-                                Users
+                                Main
                             </Link>
                         </li>
-                    )}
-                </ul>
-                <div className="d-flex">
-                    {currentUser ? (
-                        <NavProfile/>
-                    ) : (
-                        <Link
-                            className="nav-link "
-                            aria-current="page"
-                            to="/login"
-                        >
-                            Login
-                        </Link>
-                    )}
+                        {currentUser && (
+                            <li className="nav-item">
+                                <Link
+                                    className="nav-link "
+                                    aria-current="page"
+                                    to="/users"
+                                >
+                                    Users
+                                </Link>
+                            </li>
+                        )}
+                    </ul>
+                    <div className="d-flex">
+                        {currentUser ? (
+                            <NavProfile currentUser={currentUser} />
+                        ) : (
+                            <Link
+                                className="nav-link "
+                                aria-current="page"
+                                to="/login"
+                            >
+                                Login
+                            </Link>
+                        )}
+                    </div>
                 </div>
-            </div>
         </nav>
     );
 };

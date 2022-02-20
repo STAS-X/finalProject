@@ -28,6 +28,10 @@ const AuthProvider = ({ children }) => {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
+    function updateNavBar() {
+        setUser(getUserData());
+    }
+
     function logOut() {
         localStorageService.removeAuthData();
         setUser(null);
@@ -124,6 +128,7 @@ const AuthProvider = ({ children }) => {
         try {
             const { content } = await userService.getCurrentUser();
             setUser(content);
+            return content;
         } catch (error) {
             errorCatcher(error);
         } finally {
@@ -150,7 +155,17 @@ const AuthProvider = ({ children }) => {
     }, [error]);
 
     return (
-        <AuthContext.Provider value={{ signUp, logIn, logOut, currentUser }}>
+        <AuthContext.Provider
+            value={{
+                signUp,
+                logIn,
+                logOut,
+                getUserData,
+                updateNavBar,
+                currentUser
+            }}
+        >
+            {" "}
             {!isLoading ? children : <h1>Loading...</h1>}
         </AuthContext.Provider>
     );
