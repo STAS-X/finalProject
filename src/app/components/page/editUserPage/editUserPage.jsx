@@ -6,7 +6,6 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useUser } from "../../../hooks/useUsers";
 import { useAuth } from "../../../hooks/useAuth";
 import { toast } from "react-toastify";
 import { useProfessions } from "../../../hooks/useProfession";
@@ -19,9 +18,7 @@ const EditUserPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [, setError] = useState(null);
     const { updateNavBar, currentUser } = useAuth();
-    const { getUserById, getUsers } = useUser();
-    const [user] = useState(getUserById(userId));
-    const [users, setUsers] = useState([]);
+    const [user] = useState(currentUser);
 
     const transformData = (data) => {
         return data.map((item) => ({ label: item.name, value: item._id }));
@@ -69,7 +66,7 @@ const EditUserPage = () => {
                 qualities: data.qualities.map((qual) => qual.value)
             });
             if (content) {
-                getUsers().then((data) => setUsers(data));
+                // getUsers().then((data) => setUsers(data));
                 toast.success(
                     `Данные пользователя [${
                         content.name || content.email
@@ -78,6 +75,8 @@ const EditUserPage = () => {
                         position: "top-center"
                     }
                 );
+                await updateNavBar();
+                history.push(`/users/${data._id}`);
                 // return <Redirect to={`/users/${data._id}`} />;
             }
         } catch (error) {
@@ -102,15 +101,7 @@ const EditUserPage = () => {
     }, [data]);
 
     useEffect(() => {
-        if (users && users.length > 0) {
-            history.push(`/users/${data._id}`);
-            updateNavBar();
-            // setTimeout(() => history.go(0), 0);
-        }
-    }, [users]);
-
-    useEffect(() => {
-        console.log(getQualities(user.qualities));
+        // console.log(getQualities(user.qualities));
         if (user && currentUser._id !== userId) {
             toast.warn(
                 `Пользователь [${

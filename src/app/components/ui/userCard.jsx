@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { useProfessions } from "../../hooks/useProfession";
 
 const UserCard = ({ user }) => {
     const history = useHistory();
     const { currentUser } = useAuth();
+    const { professions } = useProfessions();
 
     const buttonStyle = {
         zIndex: 1 // Поправляем поведение иконки для четкого реагирования на мышь
@@ -16,7 +18,7 @@ const UserCard = ({ user }) => {
     };
     return (
         <div className="card mb-3">
-            {user && (
+            {currentUser && (
                 <div className="card-body">
                     {currentUser._id === user._id && (
                         <button
@@ -29,14 +31,14 @@ const UserCard = ({ user }) => {
                     )}
                     <div className="d-flex flex-column align-items-center text-center position-relative">
                         <img
-                            src={user.image}
+                            src={currentUser.image}
                             className="rounded-circle"
                             width="150"
                         />
                         <div className="mt-3">
-                            <h4>{user.name}</h4>
+                            <h4>{currentUser.name}</h4>
                             <p className="text-secondary mb-1">
-                                {user.profession.name}
+                                {professions.find(prof => prof._id === currentUser.profession).name}
                             </p>
                             <div className="text-muted">
                                 <i
@@ -47,7 +49,7 @@ const UserCard = ({ user }) => {
                                     className="bi bi-caret-up text-secondary"
                                     role="button"
                                 ></i>
-                                <span className="ms-2">{user.rate}</span>
+                                <span className="ms-2">{currentUser.rate}</span>
                             </div>
                         </div>
                     </div>

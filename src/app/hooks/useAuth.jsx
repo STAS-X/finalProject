@@ -5,6 +5,7 @@ import userService from "../services/user.service";
 import localStorageService from "../services/localStorage.service";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { useUser } from "./useUsers";
 
 export const httpAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
@@ -20,6 +21,7 @@ export const useAuth = () => {
 
 const AuthProvider = ({ children }) => {
     const [currentUser, setUser] = useState();
+    const { getUsers } = useUser();
     const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);
     const history = useHistory();
@@ -28,8 +30,13 @@ const AuthProvider = ({ children }) => {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-    function updateNavBar() {
-        setUser(getUserData());
+    async function updateNavBar() {
+        try {
+            await getUsers();
+            await getUserData();
+        } finally {
+            // console.log(currentUser);
+        }
     }
 
     function logOut() {
