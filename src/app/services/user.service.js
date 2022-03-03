@@ -1,5 +1,7 @@
 import localStorageService from "./localStorage.service";
 import httpService from "./http.service";
+// import { getAuthId } from "../store/users";
+// import { useSelector } from "react-redux";
 
 const userEndpoint = "user/";
 
@@ -20,9 +22,7 @@ const userService = {
         return data;
     },
     getCurrentUser: async () => {
-        const { data } = await httpService.get(
-            userEndpoint + localStorageService.getUserId()
-        );
+        const { data } = await httpService.get(userEndpoint + localStorageService.getUserId());
         return data;
     }
 };

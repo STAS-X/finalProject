@@ -18,9 +18,7 @@ const MultiSelectField = ({
               }))
             : options;
     const getInputClasses = () => {
-        return (
-            "basic-multi-select " + (error ? " is-invalid" : "")
-        );
+        return "basic-multi-select " + (error ? " is-invalid" : "");
     };
     const handleChange = (value) => {
         onChange({ name: name, value });

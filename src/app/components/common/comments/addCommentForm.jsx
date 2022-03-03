@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextAreaField from "../form/textAreaField";
 import { validator } from "../../../utils/validator";
 import PropTypes from "prop-types";
@@ -12,6 +12,11 @@ const AddCommentForm = ({ onSubmit }) => {
             [target.name]: target.value
         }));
     };
+
+    useEffect(() => {
+        if (data) validate();
+    }, [data]);
+
     const validatorConfig = {
         content: {
             isRequired: {
@@ -42,7 +47,7 @@ const AddCommentForm = ({ onSubmit }) => {
             <h2>New comment</h2>
             <form onSubmit={handleSubmit}>
                 <TextAreaField
-                    value={data.content || ""}
+                    value={data ? data.content : ""}
                     onChange={handleChange}
                     name="content"
                     label="Сообщение"

@@ -5,7 +5,8 @@ import userService from "../services/user.service";
 import localStorageService from "../services/localStorage.service";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { useUser } from "./useUsers";
+import { useDispatch } from "react-redux";
+import { setUserLogoutStatus } from "../store/users";
 
 export const httpAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
@@ -21,10 +22,11 @@ export const useAuth = () => {
 
 const AuthProvider = ({ children }) => {
     const [currentUser, setUser] = useState();
-    const { getUsers } = useUser();
     const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);
     const history = useHistory();
+
+    const dispatch = useDispatch();
 
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -32,7 +34,6 @@ const AuthProvider = ({ children }) => {
 
     async function updateNavBar() {
         try {
-            await getUsers();
             await getUserData();
         } finally {
             // console.log(currentUser);
@@ -42,6 +43,7 @@ const AuthProvider = ({ children }) => {
     function logOut() {
         localStorageService.removeAuthData();
         setUser(null);
+        dispatch(setUserLogoutStatus());
         history.push("/");
     }
 
@@ -135,7 +137,7 @@ const AuthProvider = ({ children }) => {
         try {
             const { content } = await userService.getCurrentUser();
             setUser(content);
-            return content;
+            // return content;
         } catch (error) {
             errorCatcher(error);
         } finally {

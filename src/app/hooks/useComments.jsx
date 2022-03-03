@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
-import { useAuth } from "./useAuth";
 import { nanoid } from "nanoid";
 import commentService from "../services/comment.service";
 // import ProfessionService from "../services/profession.service";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { getAuthUser } from "../store/users";
 
 const CommentsContext = React.createContext();
 
@@ -16,7 +17,7 @@ export const useComments = () => {
 export const CommentsProvider = ({ children }) => {
     const [isLoading, setLoading] = useState(true);
     const { userId } = useParams();
-    const { currentUser } = useAuth();
+    const currentUser = useSelector(getAuthUser());
     const [comments, setComments] = useState([]);
     const [error, setError] = useState(null);
 

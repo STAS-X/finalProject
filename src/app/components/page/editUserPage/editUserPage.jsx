@@ -6,25 +6,36 @@ import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backButton";
-import { useAuth } from "../../../hooks/useAuth";
 import { toast } from "react-toastify";
-import { useProfessions } from "../../../hooks/useProfession";
-import { useQualities } from "../../../hooks/useQualities";
 import userService from "../../../services/user.service";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    getQualitiesList,
+    getQualitiesLoadingStatus
+} from "../../../store/qualities";
+import {
+    getProfessionList,
+    getProfessionLoadingStatus
+} from "../../../store/professions";
+import { getUserbyId, setUserById } from "../../../store/users";
 
 const EditUserPage = () => {
     const { userId } = useParams();
+    const dispatch = useDispatch();
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
     const [, setError] = useState(null);
-    const { updateNavBar, currentUser } = useAuth();
-    const [user] = useState(currentUser);
+    const user = useSelector(getUserbyId(userId));
+    const qualities = useSelector(getQualitiesList());
+    const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
 
     const transformData = (data) => {
         return data.map((item) => ({ label: item.name, value: item._id }));
     };
-    const { professions } = useProfessions();
-    const { qualities } = useQualities();
+
+    const professions = useSelector(getProfessionList());
+    const professionsLoading = useSelector(getProfessionLoadingStatus());
+    // const { qualities } = useQualities();
 
     const getQualities = (elements) => {
         const qualitiesArray = [];
@@ -75,7 +86,7 @@ const EditUserPage = () => {
                         position: "top-center"
                     }
                 );
-                await updateNavBar();
+                dispatch(setUserById(content));
                 history.push(`/users/${data._id}`);
                 // return <Redirect to={`/users/${data._id}`} />;
             }
@@ -102,7 +113,7 @@ const EditUserPage = () => {
 
     useEffect(() => {
         // console.log(getQualities(user.qualities));
-        if (user && currentUser._id !== userId) {
+        if (user && user._id !== userId) {
             toast.warn(
                 `Пользователь [${
                     user.name || user.email
@@ -166,6 +177,8 @@ const EditUserPage = () => {
             <div className="row">
                 <div className="col-md-6 offset-md-3 shadow p-4">
                     {!isLoading &&
+                    !qualitiesLoading &&
+                    !professionsLoading &&
                     Object.keys(professions).length > 0 &&
                     Object.keys(qualities).length > 0 ? (
                         <form onSubmit={handleSubmit}>

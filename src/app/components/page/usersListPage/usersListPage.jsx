@@ -6,14 +6,21 @@ import GroupList from "../../common/groupList";
 import SearchStatus from "../../ui/searchStatus";
 import UserTable from "../../ui/usersTable";
 import _ from "lodash";
-import { useUser } from "../../../hooks/useUsers";
-import { useProfessions } from "../../../hooks/useProfession";
-import { useAuth } from "../../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import {
+    getProfessionList,
+    getProfessionLoadingStatus
+} from "../../../store/professions";
+import { getAuthUser, getUsersList } from "../../../store/users";
+
 const UsersListPage = () => {
-    const { users } = useUser();
-    const { currentUser } = useAuth();
-    const { isLoading: professionsLoading, professions } = useProfessions();
+    const [users, setUsers] = useState(useSelector(getUsersList()));
+    const currentUser = useSelector(getAuthUser());
+
     const [currentPage, setCurrentPage] = useState(1);
+
+    const professions = useSelector(getProfessionList());
+    const isProfessionLoading = useSelector(getProfessionLoadingStatus());
 
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
@@ -31,8 +38,7 @@ const UsersListPage = () => {
             }
             return user;
         });
-        // setUsers(newArray);
-        console.log(newArray);
+        setUsers(newArray);
     };
 
     useEffect(() => {
@@ -65,11 +71,7 @@ const UsersListPage = () => {
                               .indexOf(searchQuery.toLowerCase()) !== -1
                   )
                 : selectedProf
-                ? data.filter(
-                      (user) =>
-                          JSON.stringify(user.profession) ===
-                          JSON.stringify(selectedProf)
-                  )
+                ? data.filter((user) => user.profession === selectedProf._id)
                 : data;
             return filteredUsers.filter((item) => item._id !== currentUser._id);
         }
@@ -86,7 +88,7 @@ const UsersListPage = () => {
 
         return (
             <div className="d-flex">
-                {professions && !professionsLoading && (
+                {professions && !isProfessionLoading && (
                     <div className="d-flex flex-column flex-shrink-0 p-3">
                         <GroupList
                             selectedItem={selectedProf}

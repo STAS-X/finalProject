@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import SelectField from "../common/form/selectField";
@@ -7,12 +6,19 @@ import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 import { toast } from "react-toastify";
-import { useQualities } from "../../hooks/useQualities";
-import { useProfessions } from "../../hooks/useProfession";
-import { useAuth } from "../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    getQualitiesList,
+    getQualitiesLoadingStatus
+} from "../../store/qualities";
+import {
+    getProfessionList,
+    getProfessionLoadingStatus
+} from "../../store/professions";
+import { signUp } from "../../store/users";
 
 const RegisterForm = () => {
-    const history = useHistory();
+    const dispatch = useDispatch();
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -22,17 +28,33 @@ const RegisterForm = () => {
         qualities: [],
         licence: false
     });
-    const { signUp } = useAuth();
-    const { qualities } = useQualities();
-    const { professions } = useProfessions();
-    const professionsList = professions.map((p) => ({
-        label: p.name,
-        value: p._id
-    }));
-    const qualitiesList = qualities.map((q) => ({
-        label: q.name,
-        value: q._id
-    }));
+
+    const qualities = useSelector(getQualitiesList());
+    const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
+    const [qualitiesList, setQualitiesList] = useState([]);
+
+    const professions = useSelector(getProfessionList());
+    const professionsLoading = useSelector(getProfessionLoadingStatus());
+    const [professionsList, setProfessionsList] = useState([]);
+
+    useEffect(() => {
+        setQualitiesList(
+            qualities.map((q) => ({
+                label: q.name,
+                value: q._id
+            }))
+        );
+    }, [qualitiesLoading]);
+
+    useEffect(() => {
+        setProfessionsList(
+            professions.map((p) => ({
+                label: p.name,
+                value: p._id
+            }))
+        );
+    }, [professionsLoading]);
+
     const [errors, setErrors] = useState({});
 
     const handleChange = (target) => {
@@ -70,6 +92,15 @@ const RegisterForm = () => {
                 message: "Обязательно выберите вашу профессию"
             }
         },
+        qualities: {
+            isRequired: {
+                message: "Обязательно выберите ваши качества"
+            },
+            min: {
+                message: "Должно быть не менее 1-го качества",
+                value: 1
+            }
+        },
         licence: {
             isRequired: {
                 message:
@@ -96,7 +127,7 @@ const RegisterForm = () => {
     };
     const isValid = Object.keys(errors).length === 0;
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
@@ -105,14 +136,13 @@ const RegisterForm = () => {
             qualities: data.qualities.map((q) => q.value)
         };
         try {
-            await signUp(newData);
+            dispatch(signUp(newData));
             toast.success(
                 `Пользователь [${newData.email}] успешно зарегистрирован`,
                 {
                     position: "top-center"
                 }
             );
-            history.push("/");
         } catch (error) {
             // console.log(error);
             // const { code, message } = error.response.data.error;
@@ -171,6 +201,7 @@ const RegisterForm = () => {
                 defaultValue={data.qualities}
                 name="qualities"
                 label="Выберите ваши качества"
+                error={errors.qualities}
             />
             <CheckBoxField
                 value={data.licence}

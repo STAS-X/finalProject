@@ -2,11 +2,18 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import localStorageService from "./localStorage.service";
 import configFile from "../config.json";
-import { httpAuth } from "../hooks/useAuth";
 
 const http = axios.create({
     baseURL: configFile.apiEndpoint
 });
+
+const httpProvider = axios.create({
+    baseURL: "https://identitytoolkit.googleapis.com/v1/",
+    params: {
+        key: process.env.REACT_APP_FIREBASE_KEY
+    }
+});
+
 // http.defaults.baseURL = configFile.apiEndpoint;
 
 http.interceptors.request.use(
@@ -18,7 +25,7 @@ http.interceptors.request.use(
             const expiresDate = localStorageService.getTokenExpiresDate();
             const refreshToken = localStorageService.getRefreshToken();
             if (refreshToken && expiresDate < Date.now()) {
-                const { data } = await httpAuth.post("token", {
+                const { data } = await httpProvider.post("token", {
                     grant_type: "refresh_token",
                     refresh_token: refreshToken
                 });

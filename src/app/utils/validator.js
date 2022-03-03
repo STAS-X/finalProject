@@ -4,12 +4,13 @@ export function validator(data, config) {
         let statusValidate;
         switch (validateMethod) {
             case "isRequired": {
-                if (typeof data === "boolean") {
+                if (typeof data === "string") {
+                   statusValidate =
+                       data.trim() === "";
+                } if (typeof data === "boolean") {
                     statusValidate = !data;
                 } if (typeof data === "object") {
                     statusValidate = !(data && Array.isArray(data) && data.length > 0);
-                } else {
-                    statusValidate = data.trim() === "";
                 }
                 break;
             }

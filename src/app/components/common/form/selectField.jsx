@@ -7,8 +7,8 @@ const SelectField = ({
     onChange,
     defaultOption,
     options,
-    error,
-    name
+    name,
+    error = ""
 }) => {
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });

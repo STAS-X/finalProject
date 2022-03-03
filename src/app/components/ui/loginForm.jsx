@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import CheckBoxField from "../common/form/checkBoxField";
-import { toast } from "react-toastify";
-import { useAuth } from "../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthError, loadUsersList, logIn } from "../../store/users";
+import history from "../../utils/history";
 
 const LoginForm = () => {
-    const history = useHistory();
-    console.log(history.location);
+    // const history = useHistory();
     const [data, setData] = useState({
         email: "",
         password: "",
         stayOn: false
     });
-    const { logIn } = useAuth();
+    const loginError = useSelector(getAuthError());
+    const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -57,30 +57,16 @@ const LoginForm = () => {
     };
     const isValid = Object.keys(errors).length === 0;
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        const newData = {
-            ...data
-        };
-
-        try {
-            await logIn(newData);
-            toast.success(`Пользователь [${newData.email}] вошел в систему`, {
-                position: "top-center"
-            });
-            history.push(
-                history.location.state
-                    ? history.location.state.from.pathname
-                    : "/"
-            );
-        } catch (error) {
-            // console.log(error);
-            // const { code, message } = error.response.data.error;
-            setErrors(error);
-            // throw new Error("");
-        }
+        const redirect = history.location.state
+            ? history.location.state.from.pathname
+            : "/";
+        // В случае отсутствия пользователей запрашиваем их при входе
+        dispatch(loadUsersList());
+        dispatch(logIn({ payload: data, redirect }));
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -106,6 +92,7 @@ const LoginForm = () => {
             >
                 Оставаться в системе
             </CheckBoxField>
+            {loginError && <p className="text-danger">{loginError}</p>}
             <button
                 className="btn btn-primary w-100 mx-auto"
                 type="submit"
