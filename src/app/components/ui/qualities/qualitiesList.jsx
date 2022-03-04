@@ -7,10 +7,8 @@ import {
     loadQualitiesList
 } from "../../../store/qualities";
 import { useDispatch, useSelector } from "react-redux";
-// import { useQualities } from "../../../hooks/useQualities";
 
 const QualitiesList = ({ qualities }) => {
-    // const { isLoading } = useQualities();
     const dispatch = useDispatch();
     const isLoading = useSelector(getQualitiesLoadingStatus());
     const qualitiesList = useSelector(getQualitiesByIds(qualities));

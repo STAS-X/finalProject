@@ -35,7 +35,6 @@ const EditUserPage = () => {
 
     const professions = useSelector(getProfessionList());
     const professionsLoading = useSelector(getProfessionLoadingStatus());
-    // const { qualities } = useQualities();
 
     const getQualities = (elements) => {
         const qualitiesArray = [];
