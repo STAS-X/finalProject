@@ -4,7 +4,7 @@ import { validator } from "../../../utils/validator";
 import PropTypes from "prop-types";
 
 const AddCommentForm = ({ onSubmit }) => {
-    const [data, setData] = useState({});
+    const [data, setData] = useState({ content: "" });
     const [errors, setErrors] = useState({});
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -14,7 +14,7 @@ const AddCommentForm = ({ onSubmit }) => {
     };
 
     useEffect(() => {
-        if (data) validate();
+        if (data.content && errors && errors.content) setErrors({});
     }, [data]);
 
     const validatorConfig = {
@@ -32,7 +32,7 @@ const AddCommentForm = ({ onSubmit }) => {
     };
 
     const clearForm = () => {
-        setData({});
+        setData({ content: "" });
         setErrors({});
     };
     const handleSubmit = (e) => {
