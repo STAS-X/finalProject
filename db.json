@@ -1,0 +1,193 @@
+{
+    "posts": [
+        {
+            "id": "1",
+            "title": "Post One",
+            "body": "Sample post for body tag 1",
+            "publishedAt": "10-01-2022"
+        },
+        {
+            "id": "2",
+            "title": "Post Two",
+            "body": "Sample post for body tag 2",
+            "publishedAt": "10-02-2022"
+        },
+        {
+            "id": "3",
+            "title": "Post Three",
+            "body": "Sample post for body tag 3",
+            "publishedAt": "10-03-2022"
+        },
+        {
+            "id": "4",
+            "title": "Post Four",
+            "body": "Sample post for body tag 4",
+            "publishedAt": "10-04-2022"
+        },
+        {
+            "id": "5",
+            "title": "Post Five",
+            "body": "Sample post for body tag 5",
+            "publishedAt": "10-05-2022"
+        },
+        {
+            "id": "6",
+            "title": "Post Six",
+            "body": "Sample post for body tag 6",
+            "publishedAt": "10-06-2022"
+        },
+        {
+            "title": "New title",
+            "body": "New body for sample",
+            "id": "AAlCrl1",
+            "publishedAt": "2022-03-16"
+        }
+    ],
+    "tasks": [
+        {
+            "id": "1",
+            "title": "Task One",
+            "body": "Sample task one with status",
+            "progress": "0",
+            "statusId": "1",
+            "publishedAt": "10-01-2022"
+        },
+        {
+            "id": "2",
+            "title": "Task Two",
+            "body": "Sample task two with status",
+            "progress": "10",
+            "statusId": "2",
+            "publishedAt": "10-02-2022"
+        },
+        {
+            "id": "3",
+            "title": "Task Three",
+            "body": "Sample task three with status",
+            "progress": "20",
+            "statusId": "3",
+            "publishedAt": "10-03-2022"
+        },
+        {
+            "id": "4",
+            "title": "Task Four",
+            "body": "Sample task four with status",
+            "progress": "50",
+            "statusId": "3",
+            "publishedAt": "10-04-2022"
+        },
+        {
+            "id": "5",
+            "title": "Task Five",
+            "body": "Sample task five with status",
+            "progress": "80",
+            "statusId": "4",
+            "publishedAt": "10-05-2022"
+        },
+        {
+            "id": "6",
+            "title": "Task Six",
+            "body": "Sample task six with status",
+            "progress": "100",
+            "statusId": "4",
+            "publishedAt": "10-06-2022"
+        },
+        {
+            "title": "New title",
+            "body": "New body for sample",
+            "id": "AAlCrl1",
+            "publishedAt": "2022-03-16"
+        }
+    ],
+    "users": [
+        {
+            "id": "1",
+            "name": "Jhon Doe",
+            "email": "jhon@example.com"
+        },
+        {
+            "id": "2",
+            "name": "Jhon Doe",
+            "email": "jhon2@example.com"
+        },
+        {
+            "id": "3",
+            "name": "Jhon Doe",
+            "email": "jhon3@example.com"
+        },
+        {
+            "id": "4",
+            "name": "Jhon Doe4",
+            "email": "jhon4@example.com"
+        },
+        {
+            "name": "Jhon Test",
+            "email": "test@test.com",
+            "id": "-Dc0zBV"
+        }
+    ],
+    "status": [
+        {
+            "id": "1",
+            "statusId": "1",
+            "statusName": "Создано"
+        },
+        {
+            "id": "2",
+            "statusId": "2",
+            "statusName": "На исполнении"
+        },
+        {
+            "id": "3",
+            "statusId": "3",
+            "statusName": "В работе"
+        },
+        {
+            "id": "4",
+            "statusId": "4",
+            "statusName": "Завершено"
+        }
+    ],
+    "completed": [
+        {
+            "id": "1",
+            "progress": "10"
+        },
+        {
+            "id": "2",
+            "progress": "20"
+        },
+        {
+            "id": "3",
+            "progress": "30"
+        },
+        {
+            "id": "4",
+            "progress": "40"
+        },
+        {
+            "id": "5",
+            "progress": "50"
+        },
+        {
+            "id": "6",
+            "progress": "60"
+        },
+        {
+            "id": "7",
+            "progress": "70"
+        },
+        {
+            "id": "8",
+            "progress": "80"
+        },
+        {
+            "id": "9",
+            "progress": "90"
+        },
+        {
+            "id": "10",
+            "progress": "100"
+        }
+    ]
+}

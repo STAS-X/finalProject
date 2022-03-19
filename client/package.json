@@ -1,0 +1,21 @@
+{
+    "name": "client",
+    "proxy": "http://localhost:5000",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@material-ui/core": "^4.12.3",
+        "concurrently": "^7.0.0",
+        "ra-data-simple-rest": "^3.19.10",
+        "react": "^17.0.2",
+        "react-admin": "^3.19.10",
+        "react-dom": "^17.0.2",
+        "react-scripts": "0.9.5"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
+}
