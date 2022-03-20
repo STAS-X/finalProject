@@ -1,24 +1,38 @@
 import React from 'react';
-import { List, Datagrid, TextField, DateField, EditButton, DeleteButton } from 'react-admin';
+import {
+    List,
+    Datagrid,
+    TextField,
+    DateField,
+    EditButton,
+    DeleteButton    
+} from "react-admin";
+import TagsField from "../tagsfield"
 
+const PostPanel = ({ id, record, resource }) => (
+    <div dangerouslySetInnerHTML={{ __html: record.detaile }} />
+);
 
 const PostList = (props) => {
-    console.log(...props);
     return (
         <List {...props}>
-            <Datagrid rowClick="edit">
-                <TextField
-                    sortable={true}
-                    sortBy="id"
-                    sortByOrder="ASC"
-                    source="id"
-                />
+            <Datagrid
+                rowClick="edit"
+                expand={<PostPanel />}
+                isRowExpandable={(row) => row.detaile}
+            >
+                <TextField sortByOrder="ASC" source="id" />
                 <TextField
                     style={{
-                        class: `badge m-1 bg-primary round-pill m-2 `,
-                        fontSize: `24px`
+                        className: `badge bg-primary round-pill m-2 `,
+                        fontSize: `14px`
                     }}
                     source="title"
+                />
+                <TagsField
+                    source="Tags"
+                    textAlign="left"
+                    cellClassName="wrapCustomCell"
                 />
                 <DateField source="publishedAt" />
                 <EditButton basePath="/posts" />

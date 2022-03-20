@@ -4,48 +4,58 @@
             "id": "1",
             "title": "Post One",
             "body": "Sample post for body tag 1",
+            "detaile": "Test for expadble row from REACT ADMIN",
+            "tags":"keyword1,keyword2,keyword3",
             "publishedAt": "10-01-2022"
         },
         {
             "id": "2",
             "title": "Post Two",
             "body": "Sample post for body tag 2",
+            "tags": "keyword1,keyword2,keyword3",
             "publishedAt": "10-02-2022"
         },
         {
             "id": "3",
             "title": "Post Three",
             "body": "Sample post for body tag 3",
+            "detaile": "Test for expadble row from REACT ADMIN",
+            "tags": "keyword1,keyword2,keyword3",
             "publishedAt": "10-03-2022"
         },
         {
             "id": "4",
             "title": "Post Four",
             "body": "Sample post for body tag 4",
+            "tags": "keyword1,keyword2,keyword3",
             "publishedAt": "10-04-2022"
         },
         {
             "id": "5",
             "title": "Post Five",
             "body": "Sample post for body tag 5",
+            "tags": "keyword1,keyword2,keyword3",
             "publishedAt": "10-05-2022"
         },
         {
             "id": "6",
             "title": "Post Six",
             "body": "Sample post for body tag 6",
+            "tags": "keyword10,keyword20,keyword3",
             "publishedAt": "10-06-2022"
         },
         {
             "title": "New title",
             "body": "New body for sample",
-            "id": "AAlCrl1",
+            "tags": "keyword1000,keyword2000,keyword300",
+            "id": "7",
             "publishedAt": "2022-03-16"
         }
     ],
     "tasks": [
         {
             "id": "1",
+            "user_ids": [1, 2],
             "title": "Task One",
             "body": "Sample task one with status",
             "progress": "0",
@@ -54,6 +64,7 @@
         },
         {
             "id": "2",
+            "user_ids": [2, 3],
             "title": "Task Two",
             "body": "Sample task two with status",
             "progress": "10",
@@ -62,6 +73,7 @@
         },
         {
             "id": "3",
+            "user_ids": [3, 4, 5],
             "title": "Task Three",
             "body": "Sample task three with status",
             "progress": "20",
@@ -70,6 +82,7 @@
         },
         {
             "id": "4",
+            "user_ids": [1, 4, 6],
             "title": "Task Four",
             "body": "Sample task four with status",
             "progress": "50",
@@ -78,6 +91,7 @@
         },
         {
             "id": "5",
+            "user_ids": [9, 10, 12],
             "title": "Task Five",
             "body": "Sample task five with status",
             "progress": "80",
@@ -86,6 +100,7 @@
         },
         {
             "id": "6",
+            "user_ids": [6, 7, 8, 9],
             "title": "Task Six",
             "body": "Sample task six with status",
             "progress": "100",
@@ -93,37 +108,74 @@
             "publishedAt": "10-06-2022"
         },
         {
-            "title": "New title",
+            "title": "New task for example",
+            "user_ids": [4],
+            "progress": "50",
             "body": "New body for sample",
-            "id": "AAlCrl1",
-            "publishedAt": "2022-03-16"
+            "id": "7",
+            "publishedAt": "16-03-2022"
         }
     ],
     "users": [
         {
             "id": "1",
-            "name": "Jhon Doe",
+            "name": "Jhonny Depth",
             "email": "jhon@example.com"
         },
         {
             "id": "2",
-            "name": "Jhon Doe",
+            "name": "Jain Sally",
             "email": "jhon2@example.com"
         },
         {
             "id": "3",
-            "name": "Jhon Doe",
+            "name": "Jacob Fill",
             "email": "jhon3@example.com"
         },
         {
             "id": "4",
-            "name": "Jhon Doe4",
+            "name": "Philip Morriss",
             "email": "jhon4@example.com"
         },
         {
-            "name": "Jhon Test",
-            "email": "test@test.com",
-            "id": "-Dc0zBV"
+            "id": "5",
+            "name": "Jhon Doe4",
+            "email": "jhon5@example.com"
+        },
+        {
+            "id": "6",
+            "name": "Take Me",
+            "email": "jhon6@example.com"
+        },
+        {
+            "id": "7",
+            "name": "Rajner Smith",
+            "email": "jhon7@example.com"
+        },
+        {
+            "id": "8",
+            "name": "Marry Pop",
+            "email": "jhon8@example.com"
+        },
+        {
+            "id": "9",
+            "name": "Maks Barskih",
+            "email": "jhon9@example.com"
+        },
+        {
+            "id": "10",
+            "name": "Grig Leps",
+            "email": "jhon10@example.com"
+        },
+        {
+            "id": "11",
+            "name": "Masha Rasput",
+            "email": "jhon11@example.com"
+        },
+        {
+            "id": "12",
+            "name": "Nikolay Baskov",
+            "email": "jhon12@example.com"
         }
     ],
     "status": [

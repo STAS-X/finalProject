@@ -6,7 +6,8 @@ import {
     DateInput,
     SelectInput,
     ArrayInput,
-    ReferenceInput
+    ReferenceInput,
+    required
 } from "react-admin";
 
 
@@ -15,12 +16,13 @@ const TaskEdit = (props) => {
         <Edit title="Edit a Task" {...props}>
             <SimpleForm>
                 <TextInput disabled source="id" />
-                <TextInput source="title" />
-                <TextInput multiline source="body" />
+                <TextInput source="title" validate={required()} />
+                <TextInput multiline source="body" validate={required()} />
                 <ReferenceInput
                     source="statusId"
                     label="Status"
                     reference="status"
+                    validate={required()}
                 >
                     <SelectInput optionText="statusName" />
                 </ReferenceInput>
@@ -28,11 +30,16 @@ const TaskEdit = (props) => {
                     source="id"
                     label="Completed"
                     reference="completed"
+                    validate={required()}
                 >
                     <SelectInput optionText="progress" />
                 </ReferenceInput>
-                <TextInput source="progress" />
-                <DateInput label="Published" source="publishedAt" />
+                <TextInput source="progress" validate={required()} />
+                <DateInput
+                    label="Published"
+                    source="publishedAt"
+                    validate={required()}
+                />
             </SimpleForm>
         </Edit>
     );
