@@ -16,6 +16,7 @@ import {
     ReferenceArrayField,
     useTranslate
 } from "react-admin";
+import TasksFilterSidebar from "../filters/taskFilterSidebar";
 //import { DeleteOutlined } from "@mui/icons-material";
 import ProgressField from "../progress";
 import HomeIcon from "../ui/svghomeicon";
@@ -48,7 +49,12 @@ const postFilters = [
 
 const TaskList = (props) => {
     return (
-        <List {...props} perPage={5} filters={postFilters}>
+        <List
+            {...props}
+            perPage={5}
+            filters={postFilters}
+            aside={<TasksFilterSidebar />}
+        >
             <Datagrid rowClick="edit">
                 <TextField source="id" />
                 <TextField className="badge bg-warning m-2" source="title" />

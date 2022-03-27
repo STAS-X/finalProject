@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 //import { browserHistory } from "react-router";
-import { fetchUtils, Admin, Login, Resource } from "react-admin";
+import { fetchUtils, Admin, Login, Resource, Layout  } from "react-admin";
+/*import {
+    AppLocationContext,
+    Breadcrumb,
+    ResourceBreadcrumbItems
+} from "@react-admin/ra-navigation";
+*/
+//import MyMenu from "./components/menus/customMenu";
 //import createHistory from "history/createBrowserHistory";
 //import restProvider from "ra-data-simple-rest";
 import { createTheme } from "@material-ui/core/styles";
@@ -65,6 +72,18 @@ const MyLoginPage = () => (
 );
 
 const dataProvider = customProvider("http://localhost:3000");
+/*
+const MyLayout = ({ children, ...props }) => (
+    <AppLocationContext>
+        <Layout {...props} >
+            <Breadcrumb {...props}>
+                <ResourceBreadcrumbItems />
+            </Breadcrumb>
+            {children}
+        </Layout>
+    </AppLocationContext>
+);
+*/
 
 class App extends Component {
     constructor(props) {
